@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from matplotlib.style import available
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from models import *
+from hotelmanagementapp.models import *
 # Create your views here.
 
 
@@ -64,6 +64,7 @@ def createOrder(request):
                 id=i, qty=items[i], food_order=food_order))
         returnableDict = request.data
         returnableDict["id"] = food_order.id
+        returnableDict["created"] = food_order.created
         return Response(returnableDict)
     except:
         return Response(False)
@@ -76,11 +77,12 @@ def getOrders(request, pk):
         food_orders = FoodOrder.objects.all().filter(user=User.objects.get(id=pk))
         for i in food_orders:
             aDict = {}
-            aDict["date"] = i.date
+            aDict["id"] = i.id
             if i.rating != None:
                 aDict["rating"] = i.rating
             food_order_items = FoodOrderItem.objects.all().filter(food_order=i)
             aDict["items"] = {}
+            aDict["created"] = i.created
             for i in food_order_items:
                 aDict["items"][i.food.id] = i.qty
     return Response(returnableDict)

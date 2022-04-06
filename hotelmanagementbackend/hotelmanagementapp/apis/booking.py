@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from matplotlib.style import available
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from models import *
+from hotelmanagementapp.models import *
 # Create your views here.
 
 # @api_view(['GET', 'POST', 'DELETE'])
@@ -92,11 +92,10 @@ def getBookings(request, pk):
         room_bookings = RoomBooking.objects.all().filter(user = User.objects.get(id = pk))
         for i in room_bookings:
             aDict = {}
+            aDict["id"] = i.id
             aDict["room_id"] = i.room.id
             if i.rating != None:
                 aDict["rating"] = i.rating
             aDict["start_date"] = i.start_date
             aDict["end_date"] = i.end_date
         return Response(returnableDict)
-
-#history of bookings and orders
