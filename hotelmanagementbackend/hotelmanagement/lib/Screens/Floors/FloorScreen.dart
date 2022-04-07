@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hotelmanagement/Screens/Header/Header.dart';
 
 import 'Floor1.dart';
+import 'Floor2.dart';
 
 
 class Floor extends StatelessWidget {
@@ -17,31 +19,7 @@ class Floor extends StatelessWidget {
           SizedBox(
             height: 24,
           ),
-          Container(
-            height: 50,
-            width: width,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(12),
-                  bottomLeft: Radius.circular(12),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                      offset: Offset(0, 2),
-                      blurRadius: 3,
-                      color: Colors.black.withOpacity(0.1)),
-                ]),
-            child: Center(
-              child: Text(
-                "Pick a room",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
+          Header("Pick a room", width, false, (){}, Icons.home_filled),
           Expanded(
             child: ListView(
               children: [
@@ -62,7 +40,7 @@ class Floor extends StatelessWidget {
                   height: 2,
                   thickness: 3,
                 ),
-                Floor1(),
+                Floor2(),
               ],
             ),
           ),
