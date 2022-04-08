@@ -1,3 +1,6 @@
-String localhost = "http://127.0.0.1:8000";
+import 'package:shared_preferences/shared_preferences.dart';
+
+String localhost = "http://192.168.0.100:2000";
 late String username;
 late DateTime userCreated;
+late int userID;

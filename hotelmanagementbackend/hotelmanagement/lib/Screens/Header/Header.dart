@@ -5,10 +5,19 @@ class Header extends StatelessWidget {
 
   String ? title;
   double ? width;
-  bool rightIcon;
-  Function rightButton;
-  IconData rightIc;
-  Header(this.title, this.width, this.rightIcon, this.rightButton, this.rightIc);
+  bool ? rightIcon;
+  Function ? rightButton;
+  IconData ? rightIc;
+  BuildContext context;
+  bool ? lefticon;
+  Header(
+      {this.title,
+      this.width,
+     required this.context,
+      this.lefticon,
+      this.rightIcon,
+      this.rightButton,
+      this.rightIc});
 
 
   @override
@@ -32,7 +41,11 @@ class Header extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            rightIcon?  IconButton(onPressed: (){}, icon:Icon (Icons.arrow_back)): Container(),
+            lefticon ==true?  IconButton(onPressed: (){
+             Navigator.pop(context);
+            }, icon:Icon (Icons.arrow_back, color: Colors.black)): IconButton(onPressed: (){
+
+            }, icon:Icon (rightIc, color: Colors.transparent,)),
             Text(
               title!,
               style: TextStyle(
@@ -40,9 +53,11 @@ class Header extends StatelessWidget {
                   fontSize: 16,
                   fontWeight: FontWeight.bold),
             ),
-           rightIcon? IconButton(onPressed: (){
-             rightButton();
-           }, icon:Icon (rightIc)):Container(),
+           rightIcon==true? IconButton(onPressed: (){
+             rightButton!();
+           }, icon:Icon (rightIc)):IconButton(onPressed: (){
+
+           }, icon:Icon (rightIc, color: Colors.transparent,)),
           ],
         ),
       ),

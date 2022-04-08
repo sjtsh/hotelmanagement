@@ -19,7 +19,8 @@ class Floor extends StatelessWidget {
           SizedBox(
             height: 24,
           ),
-          Header("Pick a room", width, false, (){}, Icons.home_filled),
+          // Header("Pick a room", context, width,false,  false, (){}, Icons.home_filled),
+          Header(context: context, width: width ,title: "Pick a room", lefticon: false,rightIcon: false,),
           Expanded(
             child: ListView(
               children: [
