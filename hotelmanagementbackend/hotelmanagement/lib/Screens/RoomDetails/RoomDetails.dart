@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:hotelmanagement/Models/RoomBooking.dart';
+import 'package:hotelmanagement/Services/BookingService.dart';
 import 'package:hotelmanagement/Services/FoodService.dart';
 import 'package:hotelmanagement/StateManager/Datamanagement.dart';
 import 'package:hotelmanagement/StateManager/Datamanagement.dart';
@@ -9,50 +11,51 @@ import 'package:provider/provider.dart';
 import 'package:hotelmanagement/StateManager/Datamanagement.dart';
 
 import '../../Models/Food.dart';
+import '../../Models/Room.dart';
 import '../Header/Header.dart';
 
-class FoodDetails extends StatefulWidget {
+class RoomDetails extends StatefulWidget {
   @override
-  State<FoodDetails> createState() => _FoodDetailsState();
+  State<RoomDetails> createState() => _RoomDetailsState();
 }
 
-class _FoodDetailsState extends State<FoodDetails> {
+class _RoomDetailsState extends State<RoomDetails> {
   TextEditingController  textController = TextEditingController();
   ScrollController controller = ScrollController();
 
-  Food? selectedFood;
+  Room? selectedRoom;
 
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    double ? rateValue = selectedFood?.rating?.toDouble();
+    double ? rateValue = selectedRoom?.averageRating?.toDouble();
 
     return FutureBuilder(
-        future: FoodService().getFoods(),
+        future: BookingService().getRooms(),
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
-            context.read<Datamanagement>().allFoods = snapshot.data;
+            context.read<Datamanagement>().allRooms = snapshot.data;
             return Scaffold(
               body: ListView(
                 controller: controller,
                 children: [
-                  selectedFood == null
+                  selectedRoom == null
                       ? Container()
                       : Header(
                           context: context,
                           width: width,
-                          title: selectedFood!.name,
+                          title: selectedRoom!.type,
                           lefticon: false,
                           rightIcon: false,
                         ),
-                  selectedFood == null
+                  selectedRoom == null
                       ? Container()
                       : SizedBox(
                           height: 10,
                         ),
-                  selectedFood == null
+                  selectedRoom == null
                       ? Container()
                       : Padding(
                           padding: const EdgeInsets.all(2.0),
@@ -65,7 +68,7 @@ class _FoodDetailsState extends State<FoodDetails> {
                             ),
                           ),
                         ),
-                  selectedFood == null
+                  selectedRoom == null
                       ? Container()
                       : Padding(
                           padding: const EdgeInsets.only(
@@ -88,8 +91,8 @@ class _FoodDetailsState extends State<FoodDetails> {
                                     initialRating: rateValue ?? 0.0 ,
                                     onRatingUpdate: (double value) {
                                       int va = value.toInt();
-                                      // FoodService().rateOrder(selectedFood!.id, va);
-                                    print(selectedFood!.id);
+                                      // FoodService().rateOrder(selectedRoom!.id, va);
+                                    print(selectedRoom!.id);
                                       setState(() {});
                                     },
                                     itemBuilder: (BuildContext context,
@@ -106,13 +109,13 @@ class _FoodDetailsState extends State<FoodDetails> {
                                 children: [
                                   [
                                     "ID",
-                                    "#FD${selectedFood!.id.toString().padLeft(4, "0")}"
+                                    "#FD${selectedRoom!.id.toString().padLeft(4, "0")}"
                                   ],
-                                  ["Name", selectedFood!.name],
-                                  ["Amount", selectedFood!.cost.toString()],
+                                  ["Name", selectedRoom!.type],
+                                  ["Amount", selectedRoom!.cost.toString()],
                                   [
                                     "In Stock",
-                                    selectedFood!.inStock == true
+                                    selectedRoom!.available == true
                                         ? "Available"
                                         : "Out of stock"
                                   ],
@@ -142,23 +145,6 @@ class _FoodDetailsState extends State<FoodDetails> {
                                     )
                                     .toList(),
                               ),
-                              Container(
-                                height: 50,
-                                width: width / 2,
-                                child: TextFormField(
-                                  controller: textController,
-                                  onTap: () {},
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.all(16),
-                                    hintText: "Pcs",
-                                    fillColor: Color(0xffF3F3F3),
-                                    filled: true,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                  ),
-                                ),
-                              ),
                               SizedBox(
                                 height: 6,
                               ),
@@ -172,25 +158,10 @@ class _FoodDetailsState extends State<FoodDetails> {
                                     splashColor: Colors.transparent,
                                     height: 40,
                                     onPressed: () {
-                                    if(textController.text.isNotEmpty)  {
-                                        Map map = {
-                                          "id": selectedFood!.id,
-                                          "no_of_items": textController.text
-                                        };
-                                        context
-                                            .read<Datamanagement>()
-                                            .cart
-                                            .add(map);
-                                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Added to cart")));
-                                        textController.text ="";
-                                      }
-                                    else{
-                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please provide quantity")));
-                                    }
                                     },
                                     child: Center(
                                       child: Text(
-                                        "Add to cart",
+                                        "Book",
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold),
@@ -200,14 +171,14 @@ class _FoodDetailsState extends State<FoodDetails> {
                             ],
                           ),
                         ),
-                  selectedFood == null
+                  selectedRoom == null
                       ? Container()
                       : Row(
                           children: [
                             Expanded(child: Container()),
                             IconButton(
                                 onPressed: () {
-                                  selectedFood = null;
+                                  selectedRoom = null;
                                   setState(() {});
                                 },
                                 icon: Icon(
@@ -217,7 +188,7 @@ class _FoodDetailsState extends State<FoodDetails> {
                                 )),
                           ],
                         ),
-                  selectedFood == null
+                  selectedRoom == null
                       ? Container()
                       : Divider(
                           height: 2,
@@ -225,21 +196,21 @@ class _FoodDetailsState extends State<FoodDetails> {
                         ),
                   Padding(
                     padding: const EdgeInsets.all(12.0),
-                    child: Text("Other Foods",
+                    child: Text("Other Rooms",
                         style: TextStyle(fontWeight: FontWeight.bold)),
                   ),
                   SizedBox(
                     height: 16 +
-                        (context.watch<Datamanagement>().allFoods.length % 2 ==
+                        (context.watch<Datamanagement>().allRooms.length % 2 ==
                                     0
                                 ? context
                                         .watch<Datamanagement>()
-                                        .allFoods
+                                        .allRooms
                                         .length ~/
                                     2
                                 : context
                                             .watch<Datamanagement>()
-                                            .allFoods
+                                            .allRooms
                                             .length ~/
                                         2 +
                                     1) *
@@ -247,11 +218,11 @@ class _FoodDetailsState extends State<FoodDetails> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Builder(builder: (context) {
-                        List<Food> filteredFood = context
+                        List<Room> filteredFood = context
                             .watch<Datamanagement>()
-                            .allFoods
+                            .allRooms
                             .where((element) =>
-                                element.id != (selectedFood?.id ?? 0))
+                                element.id != (selectedRoom?.id ?? 0))
                             .toList();
                         return GridView.builder(
                             physics: NeverScrollableScrollPhysics(),
@@ -273,7 +244,7 @@ class _FoodDetailsState extends State<FoodDetails> {
                                       controller.animateTo(0,
                                           duration: Duration(milliseconds: 200),
                                           curve: Curves.easeIn);
-                                      selectedFood = filteredFood[i];
+                                      selectedRoom = filteredFood[i];
                                       setState(() {});
                                     },
                                     child: Container(

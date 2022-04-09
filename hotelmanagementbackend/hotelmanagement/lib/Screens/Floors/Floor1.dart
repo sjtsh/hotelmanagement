@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:hotelmanagement/Screens/RoomDetails/RoomDetails.dart';
 
 class Floor1 extends StatelessWidget {
   const Floor1({Key? key}) : super(key: key);
@@ -27,12 +28,17 @@ class Floor1 extends StatelessWidget {
             children: [
               Expanded(
                 flex: 2,
-                child: Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(16)),
-                  child: Center(child: Text("101", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold ),)),
+                child: GestureDetector(
+                  onTap: (){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_)=>RoomDetails()));
+                  },
+                  child: Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(16)),
+                    child: Center(child: Text("101", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold ),)),
+                  ),
                 ),
               ),
               Expanded(

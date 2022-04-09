@@ -18,6 +18,7 @@ class LoginManagement with ChangeNotifier, DiagnosticableTreeMixin {
   bool isLoading = false;
   bool isPasswordShown = false;
   bool isVerified = false;
+  int ? sharedValue;
 
   login(context) async {
     try {
@@ -25,9 +26,10 @@ class LoginManagement with ChangeNotifier, DiagnosticableTreeMixin {
       notifyListeners();
       await UserService()
           .signIn(usernameController.text, passwordTextController.text)
-          .then((value) {
+          .then((value) async {
         if (value) {
           isLoading = false;
+          print("hi ${userID}");
           SharedPreferences.getInstance().then(
                 (value) => value.setInt("id", userID),
           );

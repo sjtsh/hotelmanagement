@@ -2,19 +2,39 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hotelmanagement/Screens/HomePage/HomeScreen.dart';
 import 'package:hotelmanagement/Screens/SignUpScreen/SignUpScreen.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../StateManager/Datamanagement.dart';
 import '../../StateManager/LoginManagement.dart';
 
-class LogInScreen extends StatelessWidget {
+class LogInScreen extends StatefulWidget {
   const LogInScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LogInScreen> createState() => _LogInScreenState();
+}
+
+
+
+class _LogInScreenState extends State<LogInScreen> {
+
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<Datamanagement>().getShared();
+}
+
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return Scaffold(
+    return context.read()<Datamanagement>().sharedValue !=null? HomeScreen() : Scaffold(
       body: ListView(
         children: [
           Container(

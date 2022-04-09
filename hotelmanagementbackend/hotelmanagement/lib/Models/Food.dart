@@ -4,7 +4,12 @@ class Food {
   String img;
   int cost;
   bool inStock;
-  int? rating;
+  int ? rating;
 
   Food(this.id, this.name,this.img, this.cost, this.inStock, {this.rating});
+
+
 }
+
+
+
