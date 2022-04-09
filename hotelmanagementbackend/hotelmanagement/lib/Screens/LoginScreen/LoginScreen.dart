@@ -34,7 +34,7 @@ class _LogInScreenState extends State<LogInScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return context.read()<Datamanagement>().sharedValue !=null? HomeScreen() : Scaffold(
+    return Scaffold(
       body: ListView(
         children: [
           Container(

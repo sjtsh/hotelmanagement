@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:hotelmanagement/StateManager/Datamanagement.dart';
+import 'package:provider/provider.dart';
 
 class Header extends StatelessWidget {
 
@@ -7,7 +9,9 @@ class Header extends StatelessWidget {
   double ? width;
   bool ? rightIcon;
   Function ? rightButton;
+  Function ? leftButton;
   IconData ? rightIc;
+  IconData ? leftIc;
   BuildContext context;
   bool ? lefticon;
   Header(
@@ -17,6 +21,8 @@ class Header extends StatelessWidget {
       this.lefticon,
       this.rightIcon,
       this.rightButton,
+        this.leftIc,
+        this.leftButton,
       this.rightIc});
 
 
@@ -54,10 +60,10 @@ class Header extends StatelessWidget {
                   fontWeight: FontWeight.bold),
             ),
            rightIcon==true? IconButton(onPressed: (){
-             rightButton!();
-           }, icon:Icon (rightIc)):IconButton(onPressed: (){
+             leftButton!();
+           }, icon:Icon (leftIc,  color: context.watch<Datamanagement>().cartItems.length==0? Colors.black : Colors.green,)):IconButton(onPressed: (){
 
-           }, icon:Icon (rightIc, color: Colors.transparent,)),
+           }, icon:Icon (leftIc, color: Colors.transparent,)),
           ],
         ),
       ),

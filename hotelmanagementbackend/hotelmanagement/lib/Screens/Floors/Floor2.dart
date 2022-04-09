@@ -17,7 +17,7 @@ class Floor2 extends StatelessWidget {
             height: 50,
             width: width,
             decoration: BoxDecoration(
-                color: Colors.black,
+                color: Colors.grey,
                 borderRadius: BorderRadius.circular(16)),
           ),
           SizedBox(
@@ -155,7 +155,7 @@ class Floor2 extends StatelessWidget {
                   child: Container(
                     height: 50,
                     decoration: BoxDecoration(
-                        color: Colors.black,
+                        color: Colors.grey,
                         borderRadius: BorderRadius.circular(16)),
                   ),
                 ),

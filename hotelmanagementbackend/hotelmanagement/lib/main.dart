@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'Screens/Floors/Floor1.dart';
 import 'Screens/Floors/FloorScreen.dart';
 import 'Screens/LoginScreen/LoginScreen.dart';
+import 'Services/BookingService.dart';
 import 'Services/FoodService.dart';
 
 void main() {
@@ -25,7 +26,7 @@ void main() {
   ], child: const MyApp(),),
 
   );
-  FoodService().rateOrder(2, 2);
+  BookingService().getBookings(1);
 
 }
 
@@ -54,7 +55,7 @@ class _MyAppState extends State<MyApp> {
 
         primarySwatch: Colors.blue,
       ),
-      home:HomeScreen(),
+      home:LogInScreen(),
     );
   }
 }

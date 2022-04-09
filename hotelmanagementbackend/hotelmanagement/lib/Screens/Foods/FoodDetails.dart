@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:hotelmanagement/Models/Cart.dart';
 import 'package:hotelmanagement/Services/FoodService.dart';
 import 'package:hotelmanagement/StateManager/Datamanagement.dart';
 import 'package:hotelmanagement/StateManager/Datamanagement.dart';
 import 'package:hotelmanagement/StateManager/Datamanagement.dart';
 import 'package:hotelmanagement/StateManager/Datamanagement.dart';
+import 'package:hotelmanagement/global.dart';
 import 'package:provider/provider.dart';
 import 'package:hotelmanagement/StateManager/Datamanagement.dart';
 
@@ -17,17 +19,16 @@ class FoodDetails extends StatefulWidget {
 }
 
 class _FoodDetailsState extends State<FoodDetails> {
-  TextEditingController  textController = TextEditingController();
+  TextEditingController textController = TextEditingController();
   ScrollController controller = ScrollController();
 
   Food? selectedFood;
-
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    double ? rateValue = selectedFood?.rating?.toDouble();
+    double? rateValue = selectedFood?.rating?.toDouble();
 
     return FutureBuilder(
         future: FoodService().getFoods(),
@@ -49,7 +50,7 @@ class _FoodDetailsState extends State<FoodDetails> {
                         ),
                   selectedFood == null
                       ? Container()
-                      : SizedBox(
+                      : const SizedBox(
                           height: 10,
                         ),
                   selectedFood == null
@@ -60,7 +61,7 @@ class _FoodDetailsState extends State<FoodDetails> {
                             height: 300,
                             width: width,
                             child: Image.network(
-                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAZ3ZOah8ngfrECbPdGo3cOowfNY6y4LUUHg&usqp=CAU",
+                              "${localhost}${selectedFood!.img}",
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -77,28 +78,28 @@ class _FoodDetailsState extends State<FoodDetails> {
                             children: [
                               Row(
                                 children: [
-                                  Text(
+                                  const Text(
                                     "Average User Rating",
                                     style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                        const TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                   Expanded(child: Container()),
                                   RatingBar.builder(
                                     itemSize: 24,
-                                    initialRating: rateValue ?? 0.0 ,
+                                    initialRating: rateValue ?? 0.0,
                                     onRatingUpdate: (double value) {
                                       int va = value.toInt();
                                       // FoodService().rateOrder(selectedFood!.id, va);
-                                    print(selectedFood!.id);
+                                      print(selectedFood!.id);
                                       setState(() {});
                                     },
                                     itemBuilder: (BuildContext context,
                                             int index) =>
-                                        Icon(Icons.star, color: Colors.amber),
+                                        const Icon(Icons.star, color: Colors.amber),
                                   )
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 8,
                               ),
                               Column(
@@ -124,17 +125,17 @@ class _FoodDetailsState extends State<FoodDetails> {
                                             children: [
                                               Text(
                                                 e[0].toString(),
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontWeight:
                                                         FontWeight.bold),
                                               ),
                                               Expanded(child: Container()),
                                               Text(e[1].toString(),
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       color: Colors.grey))
                                             ],
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 6,
                                           ),
                                         ],
@@ -147,11 +148,12 @@ class _FoodDetailsState extends State<FoodDetails> {
                                 width: width / 2,
                                 child: TextFormField(
                                   controller: textController,
+                                  keyboardType: TextInputType.number ,
                                   onTap: () {},
                                   decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.all(16),
+                                    contentPadding: const EdgeInsets.all(16),
                                     hintText: "Pcs",
-                                    fillColor: Color(0xffF3F3F3),
+                                    fillColor: const Color(0xffF3F3F3),
                                     filled: true,
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(16),
@@ -159,7 +161,7 @@ class _FoodDetailsState extends State<FoodDetails> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 6,
                               ),
                               Container(
@@ -172,23 +174,26 @@ class _FoodDetailsState extends State<FoodDetails> {
                                     splashColor: Colors.transparent,
                                     height: 40,
                                     onPressed: () {
-                                    if(textController.text.isNotEmpty)  {
-                                        Map map = {
-                                          "id": selectedFood!.id,
-                                          "no_of_items": textController.text
-                                        };
-                                        context
-                                            .read<Datamanagement>()
-                                            .cart
-                                            .add(map);
-                                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Added to cart")));
-                                        textController.text ="";
+                                      if (textController.text.isNotEmpty) {
+                                        context.read<Datamanagement>().cartItems.
+                                        add(Cart(
+                                            id: selectedFood!.id,
+                                            Image: selectedFood!.img,
+                                            name: selectedFood!.name,
+
+                                            quantity: int.parse(
+                                                textController.text,),
+                                        rate: selectedFood!.cost));
+                                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Added to cart")));
+                                        textController.text = "";
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                                content: Text(
+                                                    "Please provide quantity")));
                                       }
-                                    else{
-                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please provide quantity")));
-                                    }
                                     },
-                                    child: Center(
+                                    child: const Center(
                                       child: Text(
                                         "Add to cart",
                                         style: TextStyle(
@@ -210,7 +215,7 @@ class _FoodDetailsState extends State<FoodDetails> {
                                   selectedFood = null;
                                   setState(() {});
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.close,
                                   color: Colors.red,
                                   size: 16,
@@ -219,13 +224,15 @@ class _FoodDetailsState extends State<FoodDetails> {
                         ),
                   selectedFood == null
                       ? Container()
-                      : Divider(
+                      : const Divider(
                           height: 2,
                           thickness: 2,
                         ),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text("Other Foods",
+                   Padding(
+                    padding: EdgeInsets.all(12.0),
+                    child: selectedFood == null
+                        ?  Text("Foods",
+                        style: TextStyle(fontWeight: FontWeight.bold)) :  Text("Other Foods",
                         style: TextStyle(fontWeight: FontWeight.bold)),
                   ),
                   SizedBox(
@@ -254,7 +261,7 @@ class _FoodDetailsState extends State<FoodDetails> {
                                 element.id != (selectedFood?.id ?? 0))
                             .toList();
                         return GridView.builder(
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             gridDelegate:
                                 const SliverGridDelegateWithMaxCrossAxisExtent(
                                     maxCrossAxisExtent: 200,
@@ -271,15 +278,17 @@ class _FoodDetailsState extends State<FoodDetails> {
 
                                       // controller.jumpTo(0);
                                       controller.animateTo(0,
-                                          duration: Duration(milliseconds: 200),
+                                          duration: const Duration(milliseconds: 200),
                                           curve: Curves.easeIn);
                                       selectedFood = filteredFood[i];
                                       setState(() {});
                                     },
                                     child: Container(
-                                      alignment: Alignment.center,
+                                      height: 200,
+                                      width: 200,
+                                      clipBehavior: Clip.hardEdge,
                                       child: Image.network(
-                                        "https://tpc.googlesyndication.com/daca_images/simgad/6055137103827894578",
+                                        "${localhost}${filteredFood[i].img}",
                                         fit: BoxFit.cover,
                                       ),
                                       decoration: BoxDecoration(
@@ -292,10 +301,10 @@ class _FoodDetailsState extends State<FoodDetails> {
                                       bottom: 16,
                                       right: 0,
                                       child: Container(
-                                        decoration: BoxDecoration(
+                                        decoration: const BoxDecoration(
                                             borderRadius: BorderRadius.only(
                                                 topLeft: Radius.circular(8),
-                                                bottomLeft: Radius.circular(8)),
+                                                bottomLeft: const Radius.circular(8)),
                                             color: Colors.green),
                                         height: 20,
                                         child: Padding(
@@ -308,7 +317,7 @@ class _FoodDetailsState extends State<FoodDetails> {
                                               child: Text(
                                             filteredFood[i].cost.toString(),
                                             style:
-                                                TextStyle(color: Colors.white),
+                                                const TextStyle(color: Colors.white),
                                           )),
                                         ),
                                       ))
@@ -322,8 +331,8 @@ class _FoodDetailsState extends State<FoodDetails> {
               ),
             );
           }
-          return Center(
-            child: CircularProgressIndicator(),
+          return const Center(
+            child: const CircularProgressIndicator(),
           );
         });
   }

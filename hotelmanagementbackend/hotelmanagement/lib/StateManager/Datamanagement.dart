@@ -4,6 +4,7 @@ import 'package:hotelmanagement/Models/RoomBooking.dart';
 import 'package:hotelmanagement/Services/FoodService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Models/Cart.dart';
 import '../Models/Food.dart';
 import '../Models/Room.dart';
 
@@ -13,6 +14,7 @@ class Datamanagement with ChangeNotifier, DiagnosticableTreeMixin {
 
   List<Room> allRooms = [];
   List<RoomBooking> bookings = [];
+  List<Cart> cartItems = [];
 
   int ? sharedValue ;
   //

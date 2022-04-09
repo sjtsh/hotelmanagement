@@ -71,6 +71,7 @@ class BookingService {
 
   Future<List<RoomBooking>> getBookings(int userId) async {
     Response res = await http.get(Uri.parse("$localhost/bookings/$userId"));
+    print(res.body);
     if (res.statusCode == 200) {
       List<dynamic> response = jsonDecode(res.body);
       List<RoomBooking> roomBookings = response

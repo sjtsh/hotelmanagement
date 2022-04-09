@@ -2,8 +2,8 @@ class RoomBooking {
   int? id;
   int roomID;
   int? rating;
-  DateTime startDate;
-  DateTime endDate;
+  String startDate;
+  String endDate;
 
   RoomBooking(
     this.roomID,

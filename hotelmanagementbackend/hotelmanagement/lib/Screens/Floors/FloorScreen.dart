@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hotelmanagement/Screens/CartScreen/CartScreen.dart';
 import 'package:hotelmanagement/Screens/Header/Header.dart';
 
 import 'Floor1.dart';
 import 'Floor2.dart';
-
 
 class Floor extends StatelessWidget {
   const Floor({Key? key}) : super(key: key);
@@ -20,7 +20,16 @@ class Floor extends StatelessWidget {
             height: 24,
           ),
           // Header("Pick a room", context, width,false,  false, (){}, Icons.home_filled),
-          Header(context: context, width: width ,title: "Pick a room", lefticon: false,rightIcon: false,),
+          Header(
+              context: context,
+              width: width,
+              title: "Pick a room",
+              lefticon: false,
+              rightIcon: true,
+              leftIc: Icons.shopping_cart,
+              leftButton: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (_)=>CartScreen()));
+              }),
           Expanded(
             child: ListView(
               children: [

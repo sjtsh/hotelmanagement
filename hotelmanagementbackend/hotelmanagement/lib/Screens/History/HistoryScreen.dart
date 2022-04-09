@@ -27,42 +27,16 @@ class HistoryScreen extends StatelessWidget {
             lefticon: false,
             rightIcon: false,
           ),
-
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          height: 80,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                    offset: Offset(0, 2),
-                    blurRadius: 4,
-                    color: Colors.black.withOpacity(0.3))
-              ]),
-          width: width,
-          child:Center(
-            child: ListTile(
-              leading: Icon(Icons.card_travel, size: 48,),
-              title:Text("${context.read<Datamanagement>().cart.length} items"),
-              subtitle: Text("Foods"),
-
-            ),
-          )
-        ),
-      ),
           Expanded(
             child: FutureBuilder(
                 future: BookingService().getBookings(userID),
                 builder: (context, AsyncSnapshot snapshot) {
-                  print(userID);
                   if (snapshot.hasData) {
                     context.read<Datamanagement>().bookings = snapshot.data;
 
                     return ListView.builder(
                         itemCount:
-                           2,
+                        context.read<Datamanagement>().bookings.length,
                         itemBuilder: (_, index) {
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -80,8 +54,8 @@ class HistoryScreen extends StatelessWidget {
                               width: width,
                               child: Row(
                                 children: [
-                                  Image.network(
-                                      "https://icons-for-free.com/iconfiles/png/512/youtube+icon-1320168265170749773.png",
+                                  Image.asset("asset/hotels.jpg",
+
                                       height: 120,
                                       width: 120),
                                   Center(
@@ -94,8 +68,7 @@ class HistoryScreen extends StatelessWidget {
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                           // "#RM${context.read<Datamanagement>().bookings[index].id}",
-                                            "helo",
+                                           "#RM${context.read<Datamanagement>().bookings[index].id}",
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 18,
@@ -105,8 +78,8 @@ class HistoryScreen extends StatelessWidget {
                                             height: 8,
                                           ),
                                           Text(
-                                            "fjk")
-                                             // "${context.read<Datamanagement>().bookings[index].startDate} to ${context.read<Datamanagement>().bookings[index].endDate}")
+
+                                             "${context.read<Datamanagement>().bookings[index].startDate.toString()} to ${context.read<Datamanagement>().bookings[index].endDate.toString()}")
                                         ],
                                       ),
                                     ),

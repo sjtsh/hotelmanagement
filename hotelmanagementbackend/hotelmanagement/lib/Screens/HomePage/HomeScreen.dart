@@ -16,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentindex = 1;
+
   final screen = [
     HistoryScreen(),
     Floor(),
@@ -23,33 +24,38 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentindex,
-        elevation: 10,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book_online),
-          label: "History",
-          backgroundColor: Colors.green),
-          BottomNavigationBarItem(
-              label: "Rooms",
-              icon: Icon(Icons.meeting_room_outlined),
-              backgroundColor: Colors.green),
-          BottomNavigationBarItem(
-              label: "foods",
-              icon: Icon(Icons.fastfood_outlined),
-              )
-        ],
-        onTap: (index){
-          setState(() {
-            _currentindex =index;
-          });
+    return WillPopScope(
+      onWillPop: (){
+        return Future.value(false);
+      },
+      child: Scaffold(
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentindex,
+          elevation: 10,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.book_online),
+            label: "History",
+            backgroundColor: Colors.green),
+            BottomNavigationBarItem(
+                label: "Rooms",
+                icon: Icon(Icons.meeting_room_outlined),
+                backgroundColor: Colors.green),
+            BottomNavigationBarItem(
+                label: "foods",
+                icon: Icon(Icons.fastfood_outlined),
+                )
+          ],
+          onTap: (index){
+            setState(() {
+              _currentindex =index;
+            });
 
-        },
+          },
 
+        ),
+        body:screen[_currentindex]
       ),
-      body:screen[_currentindex]
     );
   }
 }
