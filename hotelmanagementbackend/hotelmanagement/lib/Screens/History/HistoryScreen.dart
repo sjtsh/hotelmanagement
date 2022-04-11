@@ -14,6 +14,7 @@ class HistoryScreen extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
+
     return Scaffold(
       body: Column(
         children: [
@@ -33,6 +34,7 @@ class HistoryScreen extends StatelessWidget {
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
                     context.read<Datamanagement>().bookings = snapshot.data;
+                    print(context.read<Datamanagement>().bookings.length);
 
                     return ListView.builder(
                         itemCount:
@@ -54,34 +56,30 @@ class HistoryScreen extends StatelessWidget {
                               width: width,
                               child: Row(
                                 children: [
-                                  Image.asset("asset/hotels.jpg",
-
-                                      height: 120,
+                                  Image.asset("assets/hotels.jpg",
                                       width: 120),
+                                  const SizedBox(width: 12,),
                                   Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                           "#RM${context.read<Datamanagement>().bookings[index].id}",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18,
-                                            ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                         "#RM${context.read<Datamanagement>().bookings[index].id}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
                                           ),
-                                          SizedBox(
-                                            height: 8,
-                                          ),
-                                          Text(
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text(
 
-                                             "${context.read<Datamanagement>().bookings[index].startDate.toString()} to ${context.read<Datamanagement>().bookings[index].endDate.toString()}")
-                                        ],
-                                      ),
+                                           "${context.read<Datamanagement>().bookings[index].startDate.toString().substring(0,10)} to ${context.read<Datamanagement>().bookings[index].endDate.toString().substring(0,10)}")
+                                      ],
                                     ),
                                   )
                                 ],

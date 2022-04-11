@@ -18,7 +18,7 @@ class LoginManagement with ChangeNotifier, DiagnosticableTreeMixin {
   bool isLoading = false;
   bool isPasswordShown = false;
   bool isVerified = false;
-  int ? sharedValue;
+  int? sharedValue;
 
   login(context) async {
     try {
@@ -30,9 +30,8 @@ class LoginManagement with ChangeNotifier, DiagnosticableTreeMixin {
         if (value) {
           isLoading = false;
           print("hi ${userID}");
-          SharedPreferences.getInstance().then(
-                (value) => value.setInt("id", userID),
-          );
+
+          setShared(usernameController.text, userID, passwordTextController.text);
           return Navigator.push(context, MaterialPageRoute(builder: (_) {
             return HomeScreen();
           }));
@@ -76,4 +75,12 @@ class LoginManagement with ChangeNotifier, DiagnosticableTreeMixin {
     isPasswordShown = !isPasswordShown;
     notifyListeners();
   }
+
+  Future<void> setShared(String username, int userId, String password) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt("id", userId);
+    prefs.setString("username", username);
+    prefs.setString("password", password);
+  }
+
 }

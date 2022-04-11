@@ -61,9 +61,9 @@ class Header extends StatelessWidget {
             ),
            rightIcon==true? IconButton(onPressed: (){
              leftButton!();
-           }, icon:Icon (leftIc,  color: context.watch<Datamanagement>().cartItems.length==0? Colors.black : Colors.green,)):IconButton(onPressed: (){
+           }, icon:Icon (Icons.fastfood,)):IconButton(onPressed: (){
 
-           }, icon:Icon (leftIc, color: Colors.transparent,)),
+           }, icon:Icon (Icons.fastfood, color: Colors.transparent,)),
           ],
         ),
       ),

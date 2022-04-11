@@ -24,10 +24,11 @@ class FoodService {
   }
 
   Future<bool> rateOrder(int orderId, int rating) async {
-    Response res = await http.put(Uri.parse("$localhost/order/rate"), body: {
-      "id": orderId,
-      "rating": rating,
+    Response res = await http.put(Uri.parse("$localhost/order/rate/"), body: {
+      "id": orderId.toString(),
+      "rating": rating.toString(),
     });
+    print(res.body);
     if (res.statusCode == 200) {
       return jsonDecode(res.body);
     }

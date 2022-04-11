@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hotelmanagement/Screens/Foods/FoodDetails.dart';
 import 'package:hotelmanagement/Screens/Foods/FoodScreen.dart';
 import 'package:hotelmanagement/Screens/History/HistoryScreen.dart';
+import 'package:hotelmanagement/Screens/UserInfo/UserScreen.dart';
 
 import '../Floors/FloorScreen.dart';
 
@@ -18,9 +19,10 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentindex = 1;
 
   final screen = [
-    HistoryScreen(),
+   // HistoryScreen(),
     Floor(),
     FoodDetails(),
+    UserScreen(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -30,21 +32,24 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: Scaffold(
         bottomNavigationBar: BottomNavigationBar(
+          unselectedItemColor: Colors.black,
+          selectedItemColor: Colors.orange,
+
           currentIndex: _currentindex,
           elevation: 10,
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.book_online),
-            label: "History",
-            backgroundColor: Colors.green),
-            BottomNavigationBarItem(
                 label: "Rooms",
                 icon: Icon(Icons.meeting_room_outlined),
-                backgroundColor: Colors.green),
+                ),
             BottomNavigationBarItem(
-                label: "foods",
+                label: "Foods",
                 icon: Icon(Icons.fastfood_outlined),
-                )
+                ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.account_box_outlined),
+                label: "Info",
+               ),
           ],
           onTap: (index){
             setState(() {

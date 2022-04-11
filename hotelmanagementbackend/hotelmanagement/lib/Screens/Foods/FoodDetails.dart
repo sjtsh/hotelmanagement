@@ -80,8 +80,8 @@ class _FoodDetailsState extends State<FoodDetails> {
                                 children: [
                                   const Text(
                                     "Average User Rating",
-                                    style:
-                                        const TextStyle(fontWeight: FontWeight.bold),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
                                   ),
                                   Expanded(child: Container()),
                                   RatingBar.builder(
@@ -89,13 +89,14 @@ class _FoodDetailsState extends State<FoodDetails> {
                                     initialRating: rateValue ?? 0.0,
                                     onRatingUpdate: (double value) {
                                       int va = value.toInt();
-                                      // FoodService().rateOrder(selectedFood!.id, va);
+                                      FoodService().rateOrder(selectedFood!.id, va);
                                       print(selectedFood!.id);
                                       setState(() {});
                                     },
-                                    itemBuilder: (BuildContext context,
-                                            int index) =>
-                                        const Icon(Icons.star, color: Colors.amber),
+                                    itemBuilder:
+                                        (BuildContext context, int index) =>
+                                            const Icon(Icons.star,
+                                                color: Colors.amber),
                                   )
                                 ],
                               ),
@@ -148,7 +149,7 @@ class _FoodDetailsState extends State<FoodDetails> {
                                 width: width / 2,
                                 child: TextFormField(
                                   controller: textController,
-                                  keyboardType: TextInputType.number ,
+                                  keyboardType: TextInputType.number,
                                   onTap: () {},
                                   decoration: InputDecoration(
                                     contentPadding: const EdgeInsets.all(16),
@@ -175,16 +176,31 @@ class _FoodDetailsState extends State<FoodDetails> {
                                     height: 40,
                                     onPressed: () {
                                       if (textController.text.isNotEmpty) {
-                                        context.read<Datamanagement>().cartItems.
-                                        add(Cart(
-                                            id: selectedFood!.id,
-                                            Image: selectedFood!.img,
-                                            name: selectedFood!.name,
-
-                                            quantity: int.parse(
-                                                textController.text,),
-                                        rate: selectedFood!.cost));
-                                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Added to cart")));
+                                        if (context
+                                            .read<Datamanagement>()
+                                            .cartItems
+                                            .containsKey(selectedFood!.id)) {
+                                          context
+                                                  .read<Datamanagement>()
+                                                  .cartItems[
+                                              selectedFood!.id] = context
+                                                  .read<Datamanagement>()
+                                                  .cartItems[selectedFood!.id]! +
+                                              int.parse(
+                                                textController.text,
+                                              );
+                                        } else {
+                                          context
+                                                  .read<Datamanagement>()
+                                                  .cartItems[selectedFood!.id] =
+                                              int.parse(
+                                            textController.text,
+                                          );
+                                        }
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                                content:
+                                                    Text("Added to cart")));
                                         textController.text = "";
                                       } else {
                                         ScaffoldMessenger.of(context)
@@ -228,12 +244,13 @@ class _FoodDetailsState extends State<FoodDetails> {
                           height: 2,
                           thickness: 2,
                         ),
-                   Padding(
+                  Padding(
                     padding: EdgeInsets.all(12.0),
                     child: selectedFood == null
-                        ?  Text("Foods",
-                        style: TextStyle(fontWeight: FontWeight.bold)) :  Text("Other Foods",
-                        style: TextStyle(fontWeight: FontWeight.bold)),
+                        ? Text("Foods",
+                            style: TextStyle(fontWeight: FontWeight.bold))
+                        : Text("Other Foods",
+                            style: TextStyle(fontWeight: FontWeight.bold)),
                   ),
                   SizedBox(
                     height: 16 +
@@ -278,7 +295,8 @@ class _FoodDetailsState extends State<FoodDetails> {
 
                                       // controller.jumpTo(0);
                                       controller.animateTo(0,
-                                          duration: const Duration(milliseconds: 200),
+                                          duration:
+                                              const Duration(milliseconds: 200),
                                           curve: Curves.easeIn);
                                       selectedFood = filteredFood[i];
                                       setState(() {});
@@ -304,7 +322,8 @@ class _FoodDetailsState extends State<FoodDetails> {
                                         decoration: const BoxDecoration(
                                             borderRadius: BorderRadius.only(
                                                 topLeft: Radius.circular(8),
-                                                bottomLeft: const Radius.circular(8)),
+                                                bottomLeft:
+                                                    const Radius.circular(8)),
                                             color: Colors.green),
                                         height: 20,
                                         child: Padding(
@@ -316,8 +335,8 @@ class _FoodDetailsState extends State<FoodDetails> {
                                           child: Center(
                                               child: Text(
                                             filteredFood[i].cost.toString(),
-                                            style:
-                                                const TextStyle(color: Colors.white),
+                                            style: const TextStyle(
+                                                color: Colors.white),
                                           )),
                                         ),
                                       ))

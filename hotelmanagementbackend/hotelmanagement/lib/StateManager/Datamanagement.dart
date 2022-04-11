@@ -14,7 +14,8 @@ class Datamanagement with ChangeNotifier, DiagnosticableTreeMixin {
 
   List<Room> allRooms = [];
   List<RoomBooking> bookings = [];
-  List<Cart> cartItems = [];
+  // List<Cart> cartItems = [];
+  Map<int, int> cartItems = {}; //id of food, qty
 
   int ? sharedValue ;
   //
@@ -29,13 +30,7 @@ class Datamanagement with ChangeNotifier, DiagnosticableTreeMixin {
   //   // }
   //   sharedValue = myvalue;
   // }
-  getShared() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int? myvalue = prefs.getInt("id");
-    print(" shared on $myvalue");
-    sharedValue=myvalue;
-    notifyListeners();
-  }
+
 
 }
 

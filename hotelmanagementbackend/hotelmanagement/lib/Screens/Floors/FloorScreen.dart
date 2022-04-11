@@ -25,11 +25,8 @@ class Floor extends StatelessWidget {
               width: width,
               title: "Pick a room",
               lefticon: false,
-              rightIcon: true,
-              leftIc: Icons.shopping_cart,
-              leftButton: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (_)=>CartScreen()));
-              }),
+              rightIcon: false,
+          ),
           Expanded(
             child: ListView(
               children: [

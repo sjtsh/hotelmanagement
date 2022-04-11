@@ -15,8 +15,12 @@ class BookingService {
     Response res = await http.get(Uri.parse("$localhost/rooms"));
     if (res.statusCode == 200) {
       List<dynamic> response = jsonDecode(res.body);
+      print(res.body);
       List<Room> rooms = response
-          .map((e) => Room(
+          .map((e) {
+            List<dynamic> images = e["image"];
+        return
+          Room(
               e["id"],
               e["cost"],
               e["type"],
@@ -28,9 +32,11 @@ class BookingService {
               e["has_view"],
               e["has_wifi"],
               e["available"],
-              e["image"],
-              averageRating: e["rating"]))
+              List.generate(images.length, (index) => images[index]),
+              averageRating: e["rating"]);
+      })
           .toList();
+      print(rooms.length);
       return rooms;
     }
     return [];
@@ -47,10 +53,10 @@ class BookingService {
     return false;
   }
 
-  Future<RoomBooking?> createBooking(
-      int userId, int roomId, DateTime start, DateTime end) async {
+  Future<RoomBooking?> createBooking(int userId, int roomId, DateTime start,
+      DateTime end) async {
     Response res =
-        await http.put(Uri.parse("$localhost/booking/create"), body: {
+    await http.put(Uri.parse("$localhost/booking/create"), body: {
       "user_id": userId,
       "room_id": roomId,
       "start_date": start,
@@ -60,7 +66,7 @@ class BookingService {
       Map<String, dynamic> response = jsonDecode(res.body);
       try {
         return RoomBooking(
-            response["room_id"], response["startDate"], response["endDate"],
+            response["room_id"], response["start_date"], response["end_date"],
             id: response["id"]);
       } catch (e) {
         return null;
@@ -74,10 +80,15 @@ class BookingService {
     print(res.body);
     if (res.statusCode == 200) {
       List<dynamic> response = jsonDecode(res.body);
-      List<RoomBooking> roomBookings = response
-          .map((e) => RoomBooking(e["room_id"], e["startDate"], e["endDate"],
-              id: e["id"], rating: e["rating"]))
-          .toList();
+      List<RoomBooking> roomBookings = response.map((e) {
+        return RoomBooking(
+            e["room_id"],
+            DateTime.parse(e["start_date"] + " 00:00:00"),
+            DateTime.parse(e["end_date"] + " 00:00:00"),
+            id: e["id"],
+            rating: e["rating"]);
+      }).toList();
+      print(roomBookings.length);
       return roomBookings;
     }
     return [];

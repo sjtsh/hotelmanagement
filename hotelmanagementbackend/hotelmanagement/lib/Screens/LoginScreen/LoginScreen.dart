@@ -21,15 +21,6 @@ class LogInScreen extends StatefulWidget {
 
 
 class _LogInScreenState extends State<LogInScreen> {
-
-@override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    context.read<Datamanagement>().getShared();
-}
-
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
