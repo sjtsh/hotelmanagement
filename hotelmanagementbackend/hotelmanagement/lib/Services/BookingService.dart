@@ -36,7 +36,6 @@ class BookingService {
               averageRating: e["rating"]);
       })
           .toList();
-      print(rooms.length);
       return rooms;
     }
     return [];
@@ -55,16 +54,19 @@ class BookingService {
 
   Future<RoomBooking?> createBooking(int userId, int roomId, DateTime start,
       DateTime end) async {
+    print("_____");
+    print(roomId.toString(),);
     Response res =
-    await http.put(Uri.parse("$localhost/booking/create"), body: {
-      "user_id": userId,
-      "room_id": roomId,
-      "start_date": start,
-      "end_date": end,
+    await http.post(Uri.parse("$localhost/booking/create/"), body: {
+      "user_id": userId.toString(),
+      "room_id": roomId.toString(),
+      "start_date": start.toString(),
+      "end_date": end.toString(),
     });
+    print(res.body);
     if (res.statusCode == 200) {
-      Map<String, dynamic> response = jsonDecode(res.body);
       try {
+        Map<String, dynamic> response = jsonDecode(res.body);
         return RoomBooking(
             response["room_id"], response["start_date"], response["end_date"],
             id: response["id"]);

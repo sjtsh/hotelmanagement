@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hotelmanagement/Models/Cart.dart';
+import 'package:hotelmanagement/Models/RoomBooking.dart';
 import 'package:hotelmanagement/Screens/CartScreen/CartScreen.dart';
 import 'package:hotelmanagement/Screens/LoginScreen/LoginScreen.dart';
 import 'package:hotelmanagement/StateManager/Datamanagement.dart';
@@ -7,6 +8,7 @@ import 'package:hotelmanagement/global.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../Services/BookingService.dart';
 import '../Header/Header.dart';
 import '../History/HistoryScreen.dart';
 
@@ -73,7 +75,7 @@ class UserScreen extends StatelessWidget {
                         ),
                         title: Text("My tiffin box"),
                         subtitle: Text(context
-                                .read<Datamanagement>()
+                                .watch<Datamanagement>()
                                 .cartItems
                                 .length
                                 .toString() +
@@ -90,34 +92,47 @@ class UserScreen extends StatelessWidget {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (_) => HistoryScreen()));
                   },
-                  child: Container(
-                    height: 80,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                              offset: Offset(0, 2),
-                              blurRadius: 4,
-                              color: Colors.black.withOpacity(0.3))
-                        ]),
-                    width: width,
-                    child: Center(
-                      child: ListTile(
-                        leading: Icon(
-                          Icons.door_back_door_outlined,
-                          size: 32,
-                        ),
-                        title: Text("My bookings"),
-                        subtitle: Text(context
-                                .read<Datamanagement>()
-                                .bookings
-                                .length
-                                .toString() +
-                            " Rooms"),
-                      ),
-                    ),
-                  ),
+                  child: FutureBuilder(
+                      future: BookingService().getBookings(userID),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<dynamic> snapshot) {
+                        if (snapshot.hasData) {
+                          context.read<Datamanagement>().bookings =
+                              snapshot.data;
+
+                          return Container(
+                            height: 80,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      offset: Offset(0, 2),
+                                      blurRadius: 4,
+                                      color: Colors.black.withOpacity(0.3))
+                                ]),
+                            width: width,
+                            child: Center(
+                              child: ListTile(
+                                leading: Icon(
+                                  Icons.door_back_door_outlined,
+                                  size: 32,
+                                ),
+                                title: Text("My bookings"),
+                                subtitle: Text(context
+                                        .watch<Datamanagement>()
+                                        .bookings
+                                        .length
+                                        .toString() +
+                                    " Rooms"),
+                              ),
+                            ),
+                          );
+                        }
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }),
                 )
               ],
             ),

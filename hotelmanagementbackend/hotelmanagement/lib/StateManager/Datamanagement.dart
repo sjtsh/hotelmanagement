@@ -12,13 +12,20 @@ class Datamanagement with ChangeNotifier, DiagnosticableTreeMixin {
   List<Food> allFoods = [];
   List<Map> cart = [] ;
 
-  List<Room> allRooms = [];
+  List<Room> _allRooms = [];
+  List<Room> allRoomsDisplay = [];
   List<RoomBooking> bookings = [];
   // List<Cart> cartItems = [];
   Map<int, int> cartItems = {}; //id of food, qty
 
   int ? sharedValue ;
-  //
+
+  List<Room> get allRooms => _allRooms;
+
+  set allRooms(List<Room> value) {
+    _allRooms = value;
+  }
+//
   // sherdFunction() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
   //   int? myvalue = prefs.getInt("id"); // myvalue : value

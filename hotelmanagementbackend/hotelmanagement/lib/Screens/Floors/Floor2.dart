@@ -1,6 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../Models/Room.dart';
+import '../../StateManager/Datamanagement.dart';
 import '../RoomDetails/RoomDetails.dart';
 
 class Floor2 extends StatelessWidget {
@@ -11,6 +14,8 @@ class Floor2 extends StatelessWidget {
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    List<Room> rooms = context.read<Datamanagement>().allRooms;
+    print(rooms);
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Column(
@@ -36,7 +41,7 @@ class Floor2 extends StatelessWidget {
                   child: Container(
                     height: 50,
                     decoration: BoxDecoration(
-                        color: Colors.red,
+                        color: rooms[8].available ? Colors.green: Colors.red,
                         borderRadius: BorderRadius.circular(16)),
                     child: Center(child: Text("201", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold ),)),
                   ),
@@ -61,7 +66,7 @@ class Floor2 extends StatelessWidget {
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
-                          color: Colors.red,
+                          color: rooms[14].available ? Colors.green: Colors.red,
                           borderRadius: BorderRadius.circular(16)),
                       child: Center(child: Text("207", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold ),)),
                     ),
@@ -98,7 +103,7 @@ class Floor2 extends StatelessWidget {
                       child: Container(
                         height: 50,
                         decoration: BoxDecoration(
-                            color: Colors.green,
+                            color: rooms[9].available ? Colors.green: Colors.red,
                             borderRadius: BorderRadius.circular(16)),
                         child: Center(child: Text("202", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold ),)),
                       ),
@@ -113,7 +118,7 @@ class Floor2 extends StatelessWidget {
                       child: Container(
                         height: 50,
                         decoration: BoxDecoration(
-                            color: Colors.green,
+                            color: rooms[10].available ? Colors.green: Colors.red,
                             borderRadius: BorderRadius.circular(16)),
                         child: Center(child: Text("203", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold ),)),
                       ),
@@ -138,7 +143,7 @@ class Floor2 extends StatelessWidget {
                   child: Container(
                     height: 112,
                     decoration: BoxDecoration(
-                        color: Colors.green,
+                        color: rooms[13].available ? Colors.green: Colors.red,
                         borderRadius: BorderRadius.circular(16)),
                     child: Center(child: Text("206", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold ),)),
                   ),
@@ -162,7 +167,7 @@ class Floor2 extends StatelessWidget {
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
-                          color: Colors.red,
+                          color: rooms[11].available ? Colors.green: Colors.red,
                           borderRadius: BorderRadius.circular(16)),
                       child: Center(child: Text("204", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold ),)),
                     ),
@@ -178,7 +183,7 @@ class Floor2 extends StatelessWidget {
                   child: Container(
                     height: 50,
                     decoration: BoxDecoration(
-                        color: Colors.green,
+                        color: rooms[12].available ? Colors.green: Colors.red,
                         borderRadius: BorderRadius.circular(16)),
                     child: Center(child: Text("205", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold ),)),
                   ),

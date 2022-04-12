@@ -1,6 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:hotelmanagement/Screens/RoomDetails/RoomDetails.dart';
+import 'package:provider/provider.dart';
+
+import '../../Models/Room.dart';
+import '../../StateManager/Datamanagement.dart';
 
 class Floor1 extends StatelessWidget {
   const Floor1({Key? key}) : super(key: key);
@@ -10,6 +14,7 @@ class Floor1 extends StatelessWidget {
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    List<Room> rooms = context.read<Datamanagement>().allRooms;
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Column(
@@ -35,7 +40,7 @@ class Floor1 extends StatelessWidget {
                   child: Container(
                     height: 50,
                     decoration: BoxDecoration(
-                        color: Colors.red,
+                        color: rooms[0].available ? Colors.green: Colors.red,
                         borderRadius: BorderRadius.circular(16)),
                     child: Center(child: Text("101", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold ),)),
                   ),
@@ -60,7 +65,7 @@ class Floor1 extends StatelessWidget {
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
-                          color: Colors.red,
+                          color: rooms[7].available ? Colors.green: Colors.red,
                           borderRadius: BorderRadius.circular(16)),
                       child: Center(child: Text("108", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold ),)),
                     ),
@@ -78,7 +83,7 @@ class Floor1 extends StatelessWidget {
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
-                          color: Colors.green,
+                          color: rooms[6].available ? Colors.green: Colors.red,
                           borderRadius: BorderRadius.circular(16)),
                       child: Center(child: Text("107", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold ),)),
                     ),
@@ -103,7 +108,7 @@ class Floor1 extends StatelessWidget {
                       child: Container(
                         height: 50,
                         decoration: BoxDecoration(
-                            color: Colors.green,
+                            color: rooms[1].available ? Colors.green: Colors.red,
                             borderRadius: BorderRadius.circular(16)),
                         child: Center(child: Text("102", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold ),)),
                       ),
@@ -118,7 +123,7 @@ class Floor1 extends StatelessWidget {
                       child: Container(
                         height: 50,
                         decoration: BoxDecoration(
-                            color: Colors.green,
+                            color:rooms[2].available ? Colors.green: Colors.red,
                             borderRadius: BorderRadius.circular(16)),
                         child: Center(child: Text("103", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold ),)),
                       ),
@@ -143,7 +148,7 @@ class Floor1 extends StatelessWidget {
                   child: Container(
                     height: 112,
                     decoration: BoxDecoration(
-                        color: Colors.green,
+                        color: rooms[5].available ? Colors.green: Colors.red,
                         borderRadius: BorderRadius.circular(16)),
                     child: Center(child: Text("106", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold ),)),
                   ),
@@ -167,7 +172,7 @@ class Floor1 extends StatelessWidget {
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
-                          color: Colors.red,
+                          color: rooms[3].available ? Colors.green: Colors.red,
                           borderRadius: BorderRadius.circular(16)),
                       child: Center(child: Text("104", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold ),)),
                     ),
@@ -183,7 +188,7 @@ class Floor1 extends StatelessWidget {
                   child: Container(
                     height: 50,
                     decoration: BoxDecoration(
-                        color: Colors.green,
+                        color: rooms[4].available ? Colors.green: Colors.red,
                         borderRadius: BorderRadius.circular(16)),
                     child: Center(child: Text("105", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold ),)),
                   ),

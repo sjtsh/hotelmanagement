@@ -110,14 +110,7 @@ class _CartScreenState extends State<CartScreen> {
                         Spacer(),
                         TextButton(
                           onPressed: () {
-                            // cartList.entries.map(
-                            //   (element) {
-                            //     Food food = context
-                            //         .read<Datamanagement>()
-                            //         .allFoods
-                            //         .firstWhere((a) => element.key == a.id);
-                            //   },
-                            // );
+                            FoodService().createOrder(userID, cartList);
                           },
                           child: Text("Confirm Order >>"),
                         )
@@ -166,7 +159,7 @@ class _CartScreenState extends State<CartScreen> {
                                 )
                               ],
                             ),
-                            subtitle: Text("${element.value.toString()}"),
+                            subtitle: Text("${element.value.toString()}  (Rs. ${food.cost}) "),
                             trailing: Text("Rs.${food.cost * element.value}"),
                           ),
                         ),

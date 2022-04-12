@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hotelmanagement/Screens/CartScreen/CartScreen.dart';
 import 'package:hotelmanagement/Screens/Header/Header.dart';
+import 'package:hotelmanagement/Services/BookingService.dart';
+import 'package:provider/provider.dart';
 
+import '../../Models/Room.dart';
+import '../../StateManager/Datamanagement.dart';
 import 'Floor1.dart';
 import 'Floor2.dart';
 
@@ -28,27 +32,38 @@ class Floor extends StatelessWidget {
               rightIcon: false,
           ),
           Expanded(
-            child: ListView(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text("Floor 1"),
-                ),
-                Divider(
-                  height: 2,
-                  thickness: 3,
-                ),
-                Floor1(),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text("Floor 2"),
-                ),
-                Divider(
-                  height: 2,
-                  thickness: 3,
-                ),
-                Floor2(),
-              ],
+            child: FutureBuilder(
+              future: BookingService().getRooms(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if(snapshot.hasData) {
+                  context.read<Datamanagement>().allRooms = snapshot.data;
+                  return
+                    ListView(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text("Floor 1"),
+                        ),
+                        Divider(
+                          height: 2,
+                          thickness: 3,
+                        ),
+                        Floor1(),
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text("Floor 2"),
+                        ),
+                        Divider(
+                          height: 2,
+                          thickness: 3,
+                        ),
+                        Floor2(),
+                      ],
+                    );
+                }
+                return Center(child: Text("Loading Rooms"),);
+              }
+
             ),
           ),
         ],

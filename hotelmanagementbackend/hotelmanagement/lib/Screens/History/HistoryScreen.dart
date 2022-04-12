@@ -25,18 +25,11 @@ class HistoryScreen extends StatelessWidget {
             context: context,
             width: width,
             title: "Bookings and Orders",
-            lefticon: false,
+            lefticon: true,
             rightIcon: false,
           ),
           Expanded(
-            child: FutureBuilder(
-                future: BookingService().getBookings(userID),
-                builder: (context, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    context.read<Datamanagement>().bookings = snapshot.data;
-                    print(context.read<Datamanagement>().bookings.length);
-
-                    return ListView.builder(
+            child: ListView.builder(
                         itemCount:
                         context.read<Datamanagement>().bookings.length,
                         itemBuilder: (_, index) {
@@ -67,7 +60,7 @@ class HistoryScreen extends StatelessWidget {
                                           MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                         "#RM${context.read<Datamanagement>().bookings[index].id}",
+                                         "#RM${context.read<Datamanagement>().bookings[index].roomID}",
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18,
@@ -86,11 +79,8 @@ class HistoryScreen extends StatelessWidget {
                               ),
                             ),
                           );
-                        });
-                  }
-                  return Center(child: CircularProgressIndicator(),);
-                }),
-          )
+                        })),
+
         ],
       ),
     );

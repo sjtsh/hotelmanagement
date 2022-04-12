@@ -36,13 +36,14 @@ class FoodService {
   }
 
   Future<OrderBooking?> createOrder(int userId, Map<int, int> items) async {
-    Response res = await http.put(Uri.parse("$localhost/order/rate"), body: {
-      "user_id": userId,
-      "items": items,
+    Response res = await http.post(Uri.parse("$localhost/order/create/"), body: {
+      "user_id": userId.toString(),
+      "items": items.toString(),
     });
+    print(res.body);
     if (res.statusCode == 200) {
-      Map<String, dynamic> response = jsonDecode(res.body);
       try {
+        Map<String, dynamic> response = jsonDecode(res.body);
         return OrderBooking(response["created"], response["items"],
             id: response["id"]);
       } catch (e) {
