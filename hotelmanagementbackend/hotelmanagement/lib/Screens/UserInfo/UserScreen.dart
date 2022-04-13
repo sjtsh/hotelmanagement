@@ -3,6 +3,7 @@ import 'package:hotelmanagement/Models/Cart.dart';
 import 'package:hotelmanagement/Models/RoomBooking.dart';
 import 'package:hotelmanagement/Screens/CartScreen/CartScreen.dart';
 import 'package:hotelmanagement/Screens/LoginScreen/LoginScreen.dart';
+import 'package:hotelmanagement/Services/FoodService.dart';
 import 'package:hotelmanagement/StateManager/Datamanagement.dart';
 import 'package:hotelmanagement/global.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +28,7 @@ class UserScreen extends StatelessWidget {
             context: context,
             width: width,
             title: "Bookings and Orders",
-            lefticon: true,
+            lefticon: false,
             rightIcon: false,
           ),
           Padding(
@@ -133,7 +134,51 @@ class UserScreen extends StatelessWidget {
                           child: CircularProgressIndicator(),
                         );
                       }),
-                )
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                FutureBuilder(
+                    future: FoodService().getOrders(userID),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<dynamic> snapshot) {
+                      if (snapshot.hasData) {
+                        context.read<Datamanagement>().orderbookings =
+                            snapshot.data;
+
+                        return Container(
+                          height: 80,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                    offset: Offset(0, 2),
+                                    blurRadius: 4,
+                                    color: Colors.black.withOpacity(0.3))
+                              ]),
+                          width: width,
+                          child: Center(
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.check_box_outline_blank_outlined,
+                                size: 32,
+                              ),
+                              title: Text("My Orders"),
+                              subtitle: Text(context
+                                  .watch<Datamanagement>()
+                                  .orderbookings
+                                  .length
+                                  .toString() +
+                                  " Orders"),
+                            ),
+                          ),
+                        );
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }),
               ],
             ),
           ),

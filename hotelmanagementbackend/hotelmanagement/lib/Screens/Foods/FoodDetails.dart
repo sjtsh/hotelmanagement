@@ -86,17 +86,13 @@ class _FoodDetailsState extends State<FoodDetails> {
                                   Expanded(child: Container()),
                                   RatingBar.builder(
                                     itemSize: 24,
+                                    ignoreGestures: true,
                                     initialRating: rateValue ?? 0.0,
-                                    onRatingUpdate: (double value) {
-                                      int va = value.toInt();
-                                      FoodService().rateOrder(selectedFood!.id, va);
-                                      print(selectedFood!.id);
-                                      setState(() {});
-                                    },
                                     itemBuilder:
                                         (BuildContext context, int index) =>
                                             const Icon(Icons.star,
                                                 color: Colors.amber),
+                                    onRatingUpdate: (double value) {},
                                   )
                                 ],
                               ),
@@ -184,8 +180,9 @@ class _FoodDetailsState extends State<FoodDetails> {
                                                   .read<Datamanagement>()
                                                   .cartItems[
                                               selectedFood!.id] = context
-                                                  .read<Datamanagement>()
-                                                  .cartItems[selectedFood!.id]! +
+                                                      .read<Datamanagement>()
+                                                      .cartItems[
+                                                  selectedFood!.id]! +
                                               int.parse(
                                                 textController.text,
                                               );

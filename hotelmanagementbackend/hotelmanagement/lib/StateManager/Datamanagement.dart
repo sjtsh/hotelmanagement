@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:hotelmanagement/Models/OrderBooking.dart';
 import 'package:hotelmanagement/Models/RoomBooking.dart';
 import 'package:hotelmanagement/Services/FoodService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +16,7 @@ class Datamanagement with ChangeNotifier, DiagnosticableTreeMixin {
   List<Room> _allRooms = [];
   List<Room> allRoomsDisplay = [];
   List<RoomBooking> bookings = [];
+  List<OrderBooking> orderbookings = [];
   // List<Cart> cartItems = [];
   Map<int, int> cartItems = {}; //id of food, qty
 
@@ -25,18 +27,7 @@ class Datamanagement with ChangeNotifier, DiagnosticableTreeMixin {
   set allRooms(List<Room> value) {
     _allRooms = value;
   }
-//
-  // sherdFunction() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   int? myvalue = prefs.getInt("id"); // myvalue : value
-  //
-  //   // if (myvalue != null) {
-  //   //   return true;
-  //   // } else {
-  //   //   return false;
-  //   // }
-  //   sharedValue = myvalue;
-  // }
+
 
 
 }

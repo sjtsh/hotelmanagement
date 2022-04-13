@@ -42,12 +42,12 @@ class BookingService {
   }
 
   Future<bool> rateBooking(int roomBookingId, int rating) async {
-    Response res = await http.put(Uri.parse("$localhost/booking/rate"), body: {
-      "id": roomBookingId,
-      "rating": rating,
+    Response res = await http.put(Uri.parse("$localhost/booking/rate/"), body: {
+      "id": roomBookingId.toString(),
+      "rating": rating.toString(),
     });
     if (res.statusCode == 200) {
-      return jsonDecode(res.body);
+      return true;
     }
     return false;
   }

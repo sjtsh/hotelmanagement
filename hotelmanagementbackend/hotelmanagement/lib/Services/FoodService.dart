@@ -35,17 +35,21 @@ class FoodService {
     return false;
   }
 
-  Future<OrderBooking?> createOrder(int userId, Map<int, int> items) async {
+  Future<List<OrderBooking>?> createOrder(int userId, Map<int, int> items) async {
     Response res = await http.post(Uri.parse("$localhost/order/create/"), body: {
       "user_id": userId.toString(),
       "items": items.toString(),
     });
-    print(res.body);
     if (res.statusCode == 200) {
       try {
         Map<String, dynamic> response = jsonDecode(res.body);
-        return OrderBooking(response["created"], response["items"],
-            id: response["id"]);
+        // Map<int, dynamic>  items=  response["items"];
+
+        List<OrderBooking> orderBookings =[];
+
+        orderBookings.add(OrderBooking(DateTime.parse(response["created"]),response["items"] ,
+            id: response["id"]));
+        return  orderBookings;
       } catch (e) {
         return null;
       }
@@ -55,14 +59,16 @@ class FoodService {
 
   Future<List<OrderBooking>> getOrders(int userId) async {
     Response res = await http.get(Uri.parse("$localhost/orders/$userId"));
+    print(res.body);
     if (res.statusCode == 200) {
       List<dynamic> response = jsonDecode(res.body);
       List<OrderBooking> orderBookings = response
-          .map((e) => OrderBooking(e["created"], e["items"],
+          .map((e) => OrderBooking(DateTime.parse(e["created"]), e["items"],
               id: e["id"], rating: e["rating"]))
           .toList();
       return orderBookings;
     }
     return [];
   }
+
 }

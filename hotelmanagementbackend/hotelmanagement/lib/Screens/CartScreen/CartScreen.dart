@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hotelmanagement/Models/OrderBooking.dart';
+import 'package:hotelmanagement/Screens/Billing/BillingSceen.dart';
 import 'package:hotelmanagement/Services/FoodService.dart';
 import 'package:hotelmanagement/StateManager/Datamanagement.dart';
 import 'package:provider/provider.dart';
@@ -110,7 +112,21 @@ class _CartScreenState extends State<CartScreen> {
                         Spacer(),
                         TextButton(
                           onPressed: () {
-                            FoodService().createOrder(userID, cartList);
+                            FoodService().createOrder(userID, cartList).then((value) {
+                              if(value!=null){
+                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Order confirmed")));
+
+                                Navigator.of(context).push(MaterialPageRoute(builder: (_)=>BillingScreen(value)));
+                              }
+                              else{
+                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Failed to order")));
+                              }
+
+
+                            });
+                            // FoodService().getOrders(userID);
+
+
                           },
                           child: Text("Confirm Order >>"),
                         )
@@ -146,6 +162,7 @@ class _CartScreenState extends State<CartScreen> {
                                 child: Image.network(
                               "$localhost${food.img}",
                               fit: BoxFit.cover,
+                                  width: 70,
                             )),
                             title: Row(
                               children: [
