@@ -14,7 +14,6 @@ import 'CartScreen/CartScreen.dart';
 import 'History/HistoryScreen.dart';
 
 class UserScreen extends StatefulWidget {
-
   @override
   State<UserScreen> createState() => _UserScreenState();
 }
@@ -22,7 +21,6 @@ class UserScreen extends StatefulWidget {
 class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
-
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -60,11 +58,9 @@ class _UserScreenState extends State<UserScreen> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                   await Navigator.of(context)
+                    await Navigator.of(context)
                         .push(MaterialPageRoute(builder: (_) => CartScreen()));
-                   setState(() {
-
-                   });
+                    setState(() {});
                   },
                   child: Container(
                     height: 80,
@@ -156,10 +152,11 @@ class _UserScreenState extends State<UserScreen> {
                         Map<Food, int> endList = {};
                         element.items.forEach((key, value) {
                           endList[foods.firstWhere(
-                              (element) => key == element.id)] = value;
+                              (f) => key == f.id)] = value;
                         });
                         element.itemsIterable = endList;
                       }
+
                       return orders;
                     }),
                     builder: (BuildContext context,
@@ -167,11 +164,10 @@ class _UserScreenState extends State<UserScreen> {
                       if (snapshot.hasData) {
                         context.read<Datamanagement>().orderbookings =
                             snapshot.data;
-                        context.read<Datamanagement>().orderbookings[0].itemsIterable.forEach((key, value) {print(key.name);});
                         return GestureDetector(
-                          onTap: (){
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
-                            FoodOrders()));
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => FoodOrders()));
                           },
                           child: Container(
                             height: 80,

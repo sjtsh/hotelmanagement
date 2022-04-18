@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:hotelmanagement/Models/OrderBooking.dart';
 import 'package:provider/provider.dart';
@@ -10,26 +8,11 @@ import '../../../global.dart';
 import '../../Header/Header.dart';
 
 class FoodOrders extends StatelessWidget {
-  const FoodOrders({Key? key}) : super(key: key);
+  int counter = 0;
 
   @override
   Widget build(BuildContext context) {
-    List <Food> orders = [];
-
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-    for(int i =0 ; i< context.read<Datamanagement>().orderbookings.length;i ++) {
-      context
-          .read<Datamanagement>()
-          .orderbookings[i].itemsIterable.forEach((key, value) {
-
-              orders.add(key);
-
-
-            print(orders.length);
-      });
-    }
-
     return Scaffold(
       body: Column(
         children: [
@@ -38,19 +21,16 @@ class FoodOrders extends StatelessWidget {
           ),
           Header(
             context: context,
-            width: width,
             title: "MyOrders",
             lefticon: true,
             rightIcon: false,
           ),
-
           Expanded(
-            child: ListView.builder(
-              itemCount:orders.length,
-              itemBuilder: (BuildContext context, int index) {
-
-               return
-                Padding(
+            child: ListView(
+              children: context.read<Datamanagement>().orderbookings.map((e) {
+                counter++;
+                print(e.id);
+                return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     decoration: BoxDecoration(
@@ -62,32 +42,44 @@ class FoodOrders extends StatelessWidget {
                               blurRadius: 4,
                               color: Colors.black.withOpacity(0.3))
                         ]),
-                    width: width,
-                    child: Row(
-                      children: [
-                        Image.network("${localhost} ${orders[index].img}",height: 70, width: 70,),
-                        SizedBox(width: 12,),
-
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(orders[index].name.toString()),
-                            Text(orders[index].cost.toString()),
-                          ],
-                        ),
-
-                        SizedBox(width: 12,),
-
-
-
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            e.created.toString().substring(0, 19),
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text("Order ID: ${e.id.toString()}"),
+                          SizedBox(
+                            height: 2,
+                          ),
+                          Container(
+                            color: Colors.black.withOpacity(0.1),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: e.itemsIterable.entries
+                                    .map(
+                                      (f) => Row(
+                                        children: [
+                                          Text(f.key.name),
+                                          Expanded(child: Container()),
+                                          Text(f.value.toString()),
+                                        ],
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-
-
-
                   ),
                 );
-              }
+              }).toList(),
             ),
           )
         ],

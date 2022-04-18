@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer' as dv;
+import 'dart:math';
 
 import 'package:hotelmanagement/Models/Food.dart';
 import 'package:hotelmanagement/Models/OrderBooking.dart';
@@ -63,11 +65,13 @@ class FoodService {
 
   Future<List<OrderBooking>> getOrders(int userId) async {
     Response res = await http.get(Uri.parse("$localhost/orders/$userId"));
+    dv.log(res.body.toString());
     if (res.statusCode == 200) {
       List<dynamic> response = jsonDecode(res.body);
       List<OrderBooking> orderBookings = response
           .map((e) {
         Map<int, int> items = {};
+
         Map<String, dynamic> tobeparsed = e["items"];
         tobeparsed.forEach((key, value) {
           items[int.parse(key)] = int.parse(value.toString());
@@ -76,6 +80,7 @@ class FoodService {
             id: e["id"], rating: e["rating"]);
       })
           .toList();
+
       return orderBookings;
     }
     return [];
