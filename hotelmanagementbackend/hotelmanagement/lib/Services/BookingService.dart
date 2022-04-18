@@ -15,7 +15,6 @@ class BookingService {
     Response res = await http.get(Uri.parse("$localhost/rooms"));
     if (res.statusCode == 200) {
       List<dynamic> response = jsonDecode(res.body);
-      print(res.body);
       List<Room> rooms = response
           .map((e) {
             List<dynamic> images = e["image"];
@@ -54,8 +53,6 @@ class BookingService {
 
   Future<RoomBooking?> createBooking(int userId, int roomId, DateTime start,
       DateTime end) async {
-    print("_____");
-    print(roomId.toString(),);
     Response res =
     await http.post(Uri.parse("$localhost/booking/create/"), body: {
       "user_id": userId.toString(),
@@ -63,7 +60,6 @@ class BookingService {
       "start_date": start.toString(),
       "end_date": end.toString(),
     });
-    print(res.body);
     if (res.statusCode == 200) {
       try {
         Map<String, dynamic> response = jsonDecode(res.body);
@@ -79,7 +75,6 @@ class BookingService {
 
   Future<List<RoomBooking>> getBookings(int userId) async {
     Response res = await http.get(Uri.parse("$localhost/bookings/$userId"));
-    print(res.body);
     if (res.statusCode == 200) {
       List<dynamic> response = jsonDecode(res.body);
       List<RoomBooking> roomBookings = response.map((e) {
@@ -90,7 +85,6 @@ class BookingService {
             id: e["id"],
             rating: e["rating"]);
       }).toList();
-      print(roomBookings.length);
       return roomBookings;
     }
     return [];

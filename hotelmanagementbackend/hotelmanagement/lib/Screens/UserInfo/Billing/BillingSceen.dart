@@ -3,11 +3,10 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hotelmanagement/Models/OrderBooking.dart';
 import 'package:provider/provider.dart';
 
-import '../../Models/Food.dart';
-import '../../Services/FoodService.dart';
-import '../../StateManager/Datamanagement.dart';
-import '../../global.dart';
-import '../Header/Header.dart';
+import '../../../Models/Food.dart';
+import '../../../Services/FoodService.dart';
+import '../../../StateManager/Datamanagement.dart';
+import '../../Header/Header.dart';
 
 class BillingScreen extends StatelessWidget {
   List<OrderBooking> orderBooking;
@@ -157,7 +156,6 @@ class BillingScreen extends StatelessWidget {
                               Navigator.pop(context);
                             }
                           });
-                          print(orderbookingId);
                         },
                         itemBuilder: (BuildContext context, int index) =>
                             const Icon(Icons.star, color: Colors.amber),

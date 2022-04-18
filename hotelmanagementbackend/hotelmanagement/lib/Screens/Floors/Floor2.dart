@@ -6,16 +6,20 @@ import '../../Models/Room.dart';
 import '../../StateManager/Datamanagement.dart';
 import '../RoomDetails/RoomDetails.dart';
 
-class Floor2 extends StatelessWidget {
+class Floor2 extends StatefulWidget {
   const Floor2({Key? key}) : super(key: key);
 
+  @override
+  State<Floor2> createState() => _Floor2State();
+}
+
+class _Floor2State extends State<Floor2> {
   @override
   Widget build(BuildContext context) {
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     List<Room> rooms = context.read<Datamanagement>().allRooms;
-    print(rooms);
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Column(
@@ -35,9 +39,11 @@ class Floor2 extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: GestureDetector(
-                  onTap: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (_)=>RoomDetails(8)));
-                  },
+                  onTap: () async {
+
+                    await Navigator.of(context).push(MaterialPageRoute(builder: (_)=>RoomDetails(8)));
+                  setState((){});
+                    },
                   child: Container(
                     height: 50,
                     decoration: BoxDecoration(
@@ -60,9 +66,11 @@ class Floor2 extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 4),
                   child: GestureDetector(
-                    onTap: (){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (_)=>RoomDetails(14)));
-                    },
+                    onTap: () async {
+
+                      await Navigator.of(context).push(MaterialPageRoute(builder: (_)=>RoomDetails(14)));
+                    setState((){});
+                      },
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
@@ -97,9 +105,11 @@ class Floor2 extends StatelessWidget {
                 child: Column(
                   children: [
                     GestureDetector(
-                      onTap: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (_)=>RoomDetails(9)));
-                      },
+                      onTap: () async {
+
+                        await Navigator.of(context).push(MaterialPageRoute(builder: (_)=>RoomDetails(9)));
+                      setState((){});
+                        },
                       child: Container(
                         height: 50,
                         decoration: BoxDecoration(
@@ -112,9 +122,11 @@ class Floor2 extends StatelessWidget {
                       height: 12,
                     ),
                     GestureDetector(
-                      onTap: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (_)=>RoomDetails(10)));
-                      },
+                      onTap: () async {
+
+                        await Navigator.of(context).push(MaterialPageRoute(builder: (_)=>RoomDetails(10)));
+                      setState((){});
+                        },
                       child: Container(
                         height: 50,
                         decoration: BoxDecoration(
@@ -137,9 +149,11 @@ class Floor2 extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: GestureDetector(
-                  onTap: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (_)=>RoomDetails(13)));
-                  },
+                  onTap: () async {
+
+                    await Navigator.of(context).push(MaterialPageRoute(builder: (_)=>RoomDetails(13)));
+                  setState((){});
+                    },
                   child: Container(
                     height: 112,
                     decoration: BoxDecoration(
@@ -161,9 +175,11 @@ class Floor2 extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 4),
                   child: GestureDetector(
-                    onTap: (){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (_)=>RoomDetails(11)));
-                    },
+                    onTap: () async {
+
+                      await Navigator.of(context).push(MaterialPageRoute(builder: (_)=>RoomDetails(11)));
+                    setState((){});
+                      },
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
@@ -177,9 +193,11 @@ class Floor2 extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: GestureDetector(
-                  onTap: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (_)=>RoomDetails(12)));
-                  },
+                  onTap: () async {
+
+                    await Navigator.of(context).push(MaterialPageRoute(builder: (_)=>RoomDetails(12)));
+                  setState((){});
+                    },
                   child: Container(
                     height: 50,
                     decoration: BoxDecoration(

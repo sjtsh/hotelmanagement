@@ -14,7 +14,8 @@ class FoodService {
     if (res.statusCode == 200) {
       List<dynamic> response = jsonDecode(res.body);
       List<Food> foods = response
-          .map((e) => Food(
+          .map((e) =>
+          Food(
               e["id"], e["name"], e["img"], e["cost"], e["in_stock"],
               rating: e["rating"]))
           .toList();
@@ -35,8 +36,10 @@ class FoodService {
     return false;
   }
 
-  Future<List<OrderBooking>?> createOrder(int userId, Map<int, int> items) async {
-    Response res = await http.post(Uri.parse("$localhost/order/create/"), body: {
+  Future<List<OrderBooking>?> createOrder(int userId,
+      Map<int, int> items) async {
+    Response res = await http.post(
+        Uri.parse("$localhost/order/create/"), body: {
       "user_id": userId.toString(),
       "items": items.toString(),
     });
@@ -45,11 +48,12 @@ class FoodService {
         Map<String, dynamic> response = jsonDecode(res.body);
         // Map<int, dynamic>  items=  response["items"];
 
-        List<OrderBooking> orderBookings =[];
+        List<OrderBooking> orderBookings = [];
 
-        orderBookings.add(OrderBooking(DateTime.parse(response["created"]),response["items"] ,
-            id: response["id"]));
-        return  orderBookings;
+        orderBookings.add(
+            OrderBooking(DateTime.parse(response["created"]), response["items"],
+                id: response["id"]));
+        return orderBookings;
       } catch (e) {
         return null;
       }
@@ -59,12 +63,18 @@ class FoodService {
 
   Future<List<OrderBooking>> getOrders(int userId) async {
     Response res = await http.get(Uri.parse("$localhost/orders/$userId"));
-    print(res.body);
     if (res.statusCode == 200) {
       List<dynamic> response = jsonDecode(res.body);
       List<OrderBooking> orderBookings = response
-          .map((e) => OrderBooking(DateTime.parse(e["created"]), e["items"],
-              id: e["id"], rating: e["rating"]))
+          .map((e) {
+        Map<int, int> items = {};
+        Map<String, dynamic> tobeparsed = e["items"];
+        tobeparsed.forEach((key, value) {
+          items[int.parse(key)] = int.parse(value.toString());
+        });
+        return OrderBooking(DateTime.parse(e["created"]), items,
+            id: e["id"], rating: e["rating"]);
+      })
           .toList();
       return orderBookings;
     }

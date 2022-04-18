@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hotelmanagement/Services/BookingService.dart';
 import 'package:provider/provider.dart';
 
-import '../../Components/ratingDialog.dart';
-import '../../StateManager/Datamanagement.dart';
-import '../../global.dart';
-import '../Header/Header.dart';
+import '../../../Components/ratingDialog.dart';
+import '../../../StateManager/Datamanagement.dart';
+import '../../Header/Header.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({Key? key}) : super(key: key);

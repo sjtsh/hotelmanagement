@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hotelmanagement/Screens/Billing/BillingSceen.dart';
 import 'package:hotelmanagement/Screens/Foods/FoodDetails.dart';
 import 'package:hotelmanagement/Screens/HomePage/HomeScreen.dart';
 import 'package:hotelmanagement/Services/UserService.dart';
@@ -18,6 +17,7 @@ import 'Services/BookingService.dart';
 import 'Services/FoodService.dart';
 
 void main() {
+  FoodService().getOrders(1);
   runApp(
     MultiProvider(
       providers: [
@@ -40,7 +40,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    print(context.read<LoginManagement>().sharedValue);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -63,7 +62,6 @@ class _MyAppState extends State<MyApp> {
               )
                   .then((value) {
                 if (value) {
-                  print(value);
                   Navigator.of(context).push(MaterialPageRoute(builder: (_)=>HomeScreen())) ;
                 }
                 else{

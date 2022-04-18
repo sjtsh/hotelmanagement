@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hotelmanagement/Models/OrderBooking.dart';
-import 'package:hotelmanagement/Screens/Billing/BillingSceen.dart';
 import 'package:hotelmanagement/Services/FoodService.dart';
 import 'package:hotelmanagement/StateManager/Datamanagement.dart';
 import 'package:provider/provider.dart';
 
-import '../../Models/Cart.dart';
-import '../../Models/Food.dart';
-import '../../global.dart';
-import '../Header/Header.dart';
+import '../../../Models/Food.dart';
+import '../../../global.dart';
+import '../../Header/Header.dart';
+import '../Billing/BillingSceen.dart';
+
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);

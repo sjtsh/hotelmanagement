@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hotelmanagement/Screens/CartScreen/CartScreen.dart';
 import 'package:hotelmanagement/Screens/Header/Header.dart';
 import 'package:hotelmanagement/Services/BookingService.dart';
 import 'package:provider/provider.dart';

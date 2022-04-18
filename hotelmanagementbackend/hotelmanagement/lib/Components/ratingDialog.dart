@@ -71,9 +71,7 @@ class RatingDialog extends StatelessWidget {
                             int va = value.toInt();
                             BookingService()
                                 .rateBooking(roomID, va).then((value) {
-                                  print(roomID);
                               if (value) {
-                                print(value);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(content: const Text("Thank you")));
                                 Navigator.pop(context);

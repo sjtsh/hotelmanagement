@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:hotelmanagement/Models/Cart.dart';
-import 'package:hotelmanagement/Models/RoomBooking.dart';
-import 'package:hotelmanagement/Screens/CartScreen/CartScreen.dart';
 import 'package:hotelmanagement/Screens/LoginScreen/LoginScreen.dart';
+import 'package:hotelmanagement/Screens/UserInfo/FoodOrderHistory/orders.dart';
 import 'package:hotelmanagement/Services/FoodService.dart';
 import 'package:hotelmanagement/StateManager/Datamanagement.dart';
 import 'package:hotelmanagement/global.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../Models/Food.dart';
 import '../../Services/BookingService.dart';
 import '../Header/Header.dart';
-import '../History/HistoryScreen.dart';
+import 'CartScreen/CartScreen.dart';
+import 'History/HistoryScreen.dart';
 
-class UserScreen extends StatelessWidget {
+class UserScreen extends StatefulWidget {
+
+  @override
+  State<UserScreen> createState() => _UserScreenState();
+}
+
+class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
+
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -52,9 +59,12 @@ class UserScreen extends StatelessWidget {
                   height: 24,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.of(context)
+                  onTap: () async {
+                   await Navigator.of(context)
                         .push(MaterialPageRoute(builder: (_) => CartScreen()));
+                   setState(() {
+
+                   });
                   },
                   child: Container(
                     height: 80,
@@ -139,38 +149,56 @@ class UserScreen extends StatelessWidget {
                   height: 12,
                 ),
                 FutureBuilder(
-                    future: FoodService().getOrders(userID),
+                    future:
+                        FoodService().getOrders(userID).then((orders) async {
+                      List<Food> foods = await FoodService().getFoods();
+                      for (var element in orders) {
+                        Map<Food, int> endList = {};
+                        element.items.forEach((key, value) {
+                          endList[foods.firstWhere(
+                              (element) => key == element.id)] = value;
+                        });
+                        element.itemsIterable = endList;
+                      }
+                      return orders;
+                    }),
                     builder: (BuildContext context,
                         AsyncSnapshot<dynamic> snapshot) {
                       if (snapshot.hasData) {
                         context.read<Datamanagement>().orderbookings =
                             snapshot.data;
-
-                        return Container(
-                          height: 80,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                    offset: Offset(0, 2),
-                                    blurRadius: 4,
-                                    color: Colors.black.withOpacity(0.3))
-                              ]),
-                          width: width,
-                          child: Center(
-                            child: ListTile(
-                              leading: Icon(
-                                Icons.check_box_outline_blank_outlined,
-                                size: 32,
+                        context.read<Datamanagement>().orderbookings[0].itemsIterable.forEach((key, value) {print(key.name);});
+                        return GestureDetector(
+                          onTap: (){
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
+                            FoodOrders()));
+                          },
+                          child: Container(
+                            height: 80,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      offset: Offset(0, 2),
+                                      blurRadius: 4,
+                                      color: Colors.black.withOpacity(0.3))
+                                ]),
+                            width: width,
+                            child: Center(
+                              child: ListTile(
+                                leading: Icon(
+                                  Icons.check_box_outline_blank_outlined,
+                                  size: 32,
+                                ),
+                                title: Text("My Orders"),
+                                subtitle: Text(context
+                                        .watch<Datamanagement>()
+                                        .orderbookings
+                                        .length
+                                        .toString() +
+                                    " Orders"),
                               ),
-                              title: Text("My Orders"),
-                              subtitle: Text(context
-                                  .watch<Datamanagement>()
-                                  .orderbookings
-                                  .length
-                                  .toString() +
-                                  " Orders"),
                             ),
                           ),
                         );
