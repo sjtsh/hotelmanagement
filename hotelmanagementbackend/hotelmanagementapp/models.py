@@ -26,7 +26,7 @@ class Room(models.Model):
     has_wifi = models.BooleanField()
 
     def __str__(self):
-        return str(self.room_id)
+        return str(self.id)
 
 
 class ImageGallery(models.Model):
