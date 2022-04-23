@@ -14,8 +14,8 @@ from hotelmanagementapp.models import *
 @api_view(['POST'])
 def signUp(request):
     if 1 == 1:
-        username = int(request.data["username"])
-        password = int(request.data["password"])
+        username = request.data["username"]
+        password = request.data["password"]
         try:
             user = User.objects.get(id=username)
             return Response(False)
@@ -23,13 +23,13 @@ def signUp(request):
             user = User.objects.create(username=username, password=password)
             return Response({"username": user.username, "created": user.created})
 
+
 @api_view(['POST'])
 def signIn(request):
-    username = int(request.data["username"])
-    password = int(request.data["password"])
+    username = request.data["username"]
+    password = request.data["password"]
     try:
-        user = User.objects.get(id=username, password = password)
+        user = User.objects.get(id=username, password=password)
         return Response({"username": user.username, "created": user.created})
     except:
         return Response(False)
-    
