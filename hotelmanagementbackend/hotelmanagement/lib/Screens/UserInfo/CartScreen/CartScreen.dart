@@ -176,8 +176,13 @@ class _CartScreenState extends State<CartScreen> {
                                 )
                               ],
                             ),
-                            subtitle: Text("${element.value.toString()}  (Rs. ${food.cost}) "),
-                            trailing: Text("Rs.${food.cost * element.value}"),
+                            subtitle: Text("${element.value.toString()}  (Rs. ${food.cost}) = Rs.${food.cost * element.value}"),
+                            trailing: IconButton(onPressed: (){
+                              cartList.remove(food.id);
+                              setState(() {
+
+                              });
+                            }, icon: Icon(Icons.delete_forever_outlined, color: Colors.red,)),
                           ),
                         ),
                       ),

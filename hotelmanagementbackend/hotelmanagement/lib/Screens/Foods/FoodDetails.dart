@@ -199,6 +199,7 @@ class _FoodDetailsState extends State<FoodDetails> {
                                                 content:
                                                     Text("Added to cart")));
                                         textController.text = "";
+                                        FocusManager.instance.primaryFocus?.unfocus();
                                       } else {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(const SnackBar(

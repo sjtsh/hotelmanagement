@@ -61,8 +61,9 @@ class _LogInScreenState extends State<LogInScreen> {
                     "Login",
                   ),
                 ),
+                SizedBox(height: 32,),
                 Padding(
-                  padding: const EdgeInsets.all(32.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 32),
                   child: TextFormField(
                     controller:
                         context.read<LoginManagement>().usernameController,
@@ -81,6 +82,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     ),
                   ),
                 ),
+                SizedBox(height: 12,),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 32.0),
                   child: TextFormField(
@@ -114,8 +116,9 @@ class _LogInScreenState extends State<LogInScreen> {
                     ),
                   ),
                 ),
+                SizedBox(height: 32,),
                 Padding(
-                  padding: const EdgeInsets.all(32.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 32),
                   child: Center(
                       child: InkWell(
                     splashColor: Colors.grey,
