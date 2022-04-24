@@ -14,6 +14,7 @@ class UserService {
       "username": username,
       "password": password,
     });
+    print(res.body);
     if(res.statusCode == 200){
       if(jsonDecode(res.body) != false){
         Map<String, dynamic> response =  jsonDecode(res.body);

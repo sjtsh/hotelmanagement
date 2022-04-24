@@ -112,7 +112,9 @@ class _CartScreenState extends State<CartScreen> {
                         Spacer(),
                         TextButton(
                           onPressed: () {
+                            print(cartList);
                             FoodService().createOrder(userID, cartList).then((value) {
+                              print(value);
                               if(value!=null){
                                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Order confirmed")));
 
@@ -128,7 +130,7 @@ class _CartScreenState extends State<CartScreen> {
 
 
                           },
-                          child: Text("Confirm Order >>"),
+                          child: Text("Place Order >>"),
                         )
                       ],
                     ),

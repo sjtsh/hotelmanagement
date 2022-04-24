@@ -31,12 +31,6 @@ signUp(context) async {
         .signUp(usernameController.text, passwordTextController.text).then((value){
           if(value){
             isLoading = false;
-            // SharedPreferences.getInstance().then(
-            //       (value) => value.setString("session_id", usernameController.text),
-            // );
-            // SharedPreferences.getInstance().then(
-            //       (value) => print(value.getString("session_id")),
-            // );
            return Navigator.push(context, MaterialPageRoute(builder: (_){
               return const LogInScreen();
 
@@ -45,7 +39,7 @@ signUp(context) async {
           }));
 
     } else{
-            return ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:Text("Registration  Failed"),));
+            return ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:Text("Registration  Failed, user already exists "),));
           }
         } );
 

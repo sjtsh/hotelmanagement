@@ -280,7 +280,9 @@ class _RoomDetailsState extends State<RoomDetails> {
                         height: 16,
                       ),
                       //TODO
-                      TextButton(onPressed: _show, child: Text("Pick Date")),
+                      TextButton(onPressed: !filteredRoom[widget.index].available ? null : _show,
+
+                          child: Text("Pick Date")),
                       _selectedDateRange != null
                           ? Row(
                               children: [
