@@ -55,6 +55,7 @@ def rateOrder(request):
 
 @api_view(['POST'])
 def createOrder(request):
+    print(request.data)
     try:
         user = User.objects.get(id=int(request.data["user_id"]))  # user_id
         items = yaml.safe_load(request.data["items"])
