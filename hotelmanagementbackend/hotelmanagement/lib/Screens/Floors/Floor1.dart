@@ -39,7 +39,7 @@ class _Floor1State extends State<Floor1> {
                 child: GestureDetector(
                   onTap: () async {
                     await Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => RoomDetails(101)));
+                        MaterialPageRoute(builder: (_) => RoomDetails(0)));
                     setState(() {});
                   },
                   child: Container(
