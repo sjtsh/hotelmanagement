@@ -29,16 +29,17 @@ def getRooms(request):
         #all the images in a list
         imagesSQL = ImageGallery.objects.all().filter(room = i)
         aDict["image"] = []
-        for i in imagesSQL:
-            aDict["image"].append(i.img)
+        for j in imagesSQL:
+            aDict["image"].append(j.img)
 
         #to check whether the room is availalble for now
         room_bookings = RoomBooking.objects.all().filter(room = i)
         now = datetime.now()
         available = True
         for i in room_bookings:
-            if(i.start_date >= now and i.end_date >= now.date):
+            if(i.start_date >= now.date() and i.end_date >= now.date()):
                 available = False
+                print(i.id)
         aDict["available"] = available
 
         #to calculate average rating of the room
@@ -72,17 +73,17 @@ def rateBooking(request):
         
 @api_view(['POST'])
 def createBooking(request):
-    try:
+    if 1==1:
         user = User.objects.get(id = int(request.data["user_id"]))
         room = Room.objects.get(id = int(request.data["room_id"]))
         start_date = request.data["start_date"]
         end_date = request.data["end_date"]
-        room_booking = RoomBooking.objects.create(user = user, room = room, start_date = start_date, end_date = end_date)
-        returnableDict = request.data
+        room_booking = RoomBooking.objects.create(user = user, room = room, start_date = start_date[0:10], end_date = end_date[0:10])
+        returnableDict = {}
+        for i in request.data:
+            returnableDict[i] = request.data[i]
         returnableDict["id"] = room_booking.id
         return Response(returnableDict)
-    except:
-        return Response(False)
 
 
 @api_view(['GET'])
@@ -93,9 +94,11 @@ def getBookings(request, pk):
         for i in room_bookings:
             aDict = {}
             aDict["id"] = i.id
-            aDict["room_id"] = i.room.id
+            aDict["room_id"] = i.room.room_id
+    
             if i.rating != None:
                 aDict["rating"] = i.rating
             aDict["start_date"] = i.start_date
             aDict["end_date"] = i.end_date
+            returnableDict.append(aDict)
         return Response(returnableDict)

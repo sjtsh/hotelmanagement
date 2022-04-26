@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from hotelmanagementapp.models import *
 # Create your views here.
-
+import yaml
 
 # average rating, img, id, name, amount, in stock
 # @api_view(['GET', 'POST', 'DELETE'])
@@ -57,14 +57,17 @@ def rateOrder(request):
 def createOrder(request):
     try:
         user = User.objects.get(id=int(request.data["user_id"]))  # user_id
-        items = request.data["items"]
+        items = yaml.safe_load(request.data["items"])
         food_order = FoodOrder.objects.create(user=user)
         for i in items.keys():
-            FoodOrderItem.objects.create(Food.objects.get(
-                id=i, qty=items[i], food_order=food_order))
-        returnableDict = request.data
+            FoodOrderItem.objects.create(food = Food.objects.get(
+                id=i), qty=items[i], food_order=food_order)
+        returnableDict = {}
+        for i in request.data:
+            returnableDict[i] = request.data[i]
         returnableDict["id"] = food_order.id
         returnableDict["created"] = food_order.created
+        returnableDict["items"] = items
         return Response(returnableDict)
     except:
         return Response(False)
@@ -78,6 +81,7 @@ def getOrders(request, pk):
         for i in food_orders:
             aDict = {}
             aDict["id"] = i.id
+            print(i.id)
             if i.rating != None:
                 aDict["rating"] = i.rating
             food_order_items = FoodOrderItem.objects.all().filter(food_order=i)
@@ -85,4 +89,5 @@ def getOrders(request, pk):
             aDict["created"] = i.created
             for i in food_order_items:
                 aDict["items"][i.food.id] = i.qty
+                returnableDict.append(aDict)
     return Response(returnableDict)
