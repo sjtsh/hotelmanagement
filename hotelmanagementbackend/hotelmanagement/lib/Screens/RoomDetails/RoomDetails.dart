@@ -54,6 +54,12 @@ class _RoomDetailsState extends State<RoomDetails> {
     BookingService().createBooking(userid, roomId, start, end).then((value) {
       if(value!=null){
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Room already booked")));
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Room booked")));
+        Navigator.pop(context);
+        setState(() {
+
+        });
       }
     });
   }
@@ -67,9 +73,7 @@ class _RoomDetailsState extends State<RoomDetails> {
 
     List<Room> filteredRoom = context
         .watch<Datamanagement>()
-        .allRooms
-        .where((element) => element.id != (selectedRoom?.id ?? 0))
-        .toList();
+        .allRooms;
     selectedRoom = filteredRoom[widget.index];
     return Scaffold(
       body: ListView(

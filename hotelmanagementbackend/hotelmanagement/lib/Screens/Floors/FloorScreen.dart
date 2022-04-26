@@ -8,9 +8,20 @@ import '../../StateManager/Datamanagement.dart';
 import 'Floor1.dart';
 import 'Floor2.dart';
 
-class Floor extends StatelessWidget {
+class Floor extends StatefulWidget {
   const Floor({Key? key}) : super(key: key);
 
+  @override
+  State<Floor> createState() => _FloorState();
+}
+
+class _FloorState extends State<Floor> {
+
+  refresh(){
+    setState(() {
+
+    });
+  }
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -47,7 +58,7 @@ class Floor extends StatelessWidget {
                           height: 2,
                           thickness: 3,
                         ),
-                        Floor1(),
+                        Floor1(refresh),
                         Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Text("Floor 2"),
@@ -56,7 +67,7 @@ class Floor extends StatelessWidget {
                           height: 2,
                           thickness: 3,
                         ),
-                        Floor2(),
+                        Floor2(refresh),
                       ],
                     );
                 }
