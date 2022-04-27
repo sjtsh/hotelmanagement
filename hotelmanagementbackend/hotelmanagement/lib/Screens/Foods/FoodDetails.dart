@@ -172,6 +172,15 @@ class _FoodDetailsState extends State<FoodDetails> {
                                     height: 40,
                                     onPressed: () {
                                       if (textController.text.isNotEmpty) {
+                                        try{
+                                          int.parse(textController.text);
+                                        }catch (e){
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Please enter valid number")));
+                                        }
+
                                         if (context
                                             .read<Datamanagement>()
                                             .cartItems
@@ -187,6 +196,7 @@ class _FoodDetailsState extends State<FoodDetails> {
                                                 textController.text,
                                               );
                                         } else {
+
                                           context
                                                   .read<Datamanagement>()
                                                   .cartItems[selectedFood!.id] =
@@ -199,12 +209,14 @@ class _FoodDetailsState extends State<FoodDetails> {
                                                 content:
                                                     Text("Added to cart")));
                                         textController.text = "";
+                                        FocusManager.instance.primaryFocus?.unfocus();
                                       } else {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(const SnackBar(
                                                 content: Text(
                                                     "Please provide quantity")));
                                       }
+
                                     },
                                     child: const Center(
                                       child: Text(

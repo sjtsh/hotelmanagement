@@ -112,7 +112,9 @@ class _CartScreenState extends State<CartScreen> {
                         Spacer(),
                         TextButton(
                           onPressed: () {
+                            print(cartList);
                             FoodService().createOrder(userID, cartList).then((value) {
+                              print(value);
                               if(value!=null){
                                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Order confirmed")));
 
@@ -128,7 +130,7 @@ class _CartScreenState extends State<CartScreen> {
 
 
                           },
-                          child: Text("Confirm Order >>"),
+                          child: Text("Place Order >>"),
                         )
                       ],
                     ),
@@ -176,8 +178,13 @@ class _CartScreenState extends State<CartScreen> {
                                 )
                               ],
                             ),
-                            subtitle: Text("${element.value.toString()}  (Rs. ${food.cost}) "),
-                            trailing: Text("Rs.${food.cost * element.value}"),
+                            subtitle: Text("${element.value.toString()}  (Rs. ${food.cost}) = Rs.${food.cost * element.value}"),
+                            trailing: IconButton(onPressed: (){
+                              cartList.remove(food.id);
+                              setState(() {
+
+                              });
+                            }, icon: Icon(Icons.delete_forever_outlined, color: Colors.red,)),
                           ),
                         ),
                       ),

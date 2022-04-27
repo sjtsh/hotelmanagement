@@ -6,7 +6,8 @@ import '../../Models/Room.dart';
 import '../../StateManager/Datamanagement.dart';
 
 class Floor1 extends StatefulWidget {
-  const Floor1({Key? key}) : super(key: key);
+  final Function refresh;
+  Floor1(this.refresh);
 
   @override
   State<Floor1> createState() => _Floor1State();
@@ -71,7 +72,7 @@ class _Floor1State extends State<Floor1> {
                     onTap: () async {
                       await Navigator.of(context).push(
                           MaterialPageRoute(builder: (_) => RoomDetails(7)));
-                      setState(() {});
+                      widget.refresh();
                     },
                     child: Container(
                       height: 50,

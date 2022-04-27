@@ -50,8 +50,18 @@ class _RoomDetailsState extends State<RoomDetails> {
     }
   }
 
-  _bookRoom(int userid, int roomId, DateTime start, DateTime end) {
-    BookingService().createBooking(userid, roomId, start, end);
+  _bookRoom(int userid, int roomId, DateTime start, DateTime end, context) {
+    BookingService().createBooking(userid, roomId, start, end).then((value) {
+      if(value!=null){
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Room already booked")));
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Room booked")));
+        Navigator.pop(context);
+        setState(() {
+
+        });
+      }
+    });
   }
 
   @override
@@ -63,9 +73,7 @@ class _RoomDetailsState extends State<RoomDetails> {
 
     List<Room> filteredRoom = context
         .watch<Datamanagement>()
-        .allRooms
-        .where((element) => element.id != (selectedRoom?.id ?? 0))
-        .toList();
+        .allRooms;
     selectedRoom = filteredRoom[widget.index];
     return Scaffold(
       body: ListView(
@@ -276,7 +284,9 @@ class _RoomDetailsState extends State<RoomDetails> {
                         height: 16,
                       ),
                       //TODO
-                      TextButton(onPressed: _show, child: Text("Pick Date")),
+                      TextButton(onPressed: !filteredRoom[widget.index].available ? null : _show,
+
+                          child: Text("Pick Date")),
                       _selectedDateRange != null
                           ? Row(
                               children: [
@@ -340,7 +350,10 @@ class _RoomDetailsState extends State<RoomDetails> {
                                         userID,
                                         filteredRoom[widget.index].id,
                                         _selectedDateRange!.start,
-                                        _selectedDateRange!.end);
+                                        _selectedDateRange!.end, context);
+                                    setState(() {
+
+                                    });
                                   }else{
                                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please pick date")));
 

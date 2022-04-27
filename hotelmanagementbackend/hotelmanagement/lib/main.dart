@@ -54,7 +54,6 @@ class _MyAppState extends State<MyApp> {
           future: SharedPreferences.getInstance(),
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
-              userName =snapshot.data.getString("username").toString().toUpperCase();
               UserService()
                   .signIn(
                 snapshot.data.getString("username").toString(),
@@ -62,7 +61,10 @@ class _MyAppState extends State<MyApp> {
               )
                   .then((value) {
                 if (value) {
+
+                  userName =snapshot.data.getString("username").toString().toUpperCase();
                   Navigator.of(context).push(MaterialPageRoute(builder: (_)=>HomeScreen())) ;
+
                 }
                 else{
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Verification failed, Please login to proceed")));

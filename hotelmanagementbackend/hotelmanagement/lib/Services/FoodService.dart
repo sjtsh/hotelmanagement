@@ -45,6 +45,7 @@ class FoodService {
       "user_id": userId.toString(),
       "items": items.toString(),
     });
+    print(res.body);
     if (res.statusCode == 200) {
       try {
         Map<String, dynamic> response = jsonDecode(res.body);
@@ -52,9 +53,21 @@ class FoodService {
 
         List<OrderBooking> orderBookings = [];
 
+
+        Map<int, int> items = {};
+
+        Map<String, dynamic> tobeparsed = response["items"];
+        tobeparsed.forEach((key, value) {
+          items[int.parse(key)] = int.parse(value.toString());
+        });
+
         orderBookings.add(
-            OrderBooking(DateTime.parse(response["created"]), response["items"],
+            OrderBooking(DateTime.parse(response["created"]), items,
                 id: response["id"]));
+
+        print("orderBookings");
+        print(orderBookings);
+
         return orderBookings;
       } catch (e) {
         return null;
