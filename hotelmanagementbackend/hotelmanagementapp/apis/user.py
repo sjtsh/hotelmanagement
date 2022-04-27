@@ -17,7 +17,7 @@ def signUp(request):
         username =request.data["username"]
         password =request.data["password"]
         try:
-            user = User.objects.filter(username=username)
+            user = User.objects.get(username=username)
             return Response(False)
         except:
             user = User.objects.create(username=username, password=password)

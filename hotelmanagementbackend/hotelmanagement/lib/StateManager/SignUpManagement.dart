@@ -30,6 +30,7 @@ signUp(context) async {
     await UserService()
         .signUp(usernameController.text, passwordTextController.text).then((value){
           if(value){
+            print(value);
             isLoading = false;
            return Navigator.push(context, MaterialPageRoute(builder: (_){
               return const LogInScreen();
